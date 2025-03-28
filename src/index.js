@@ -70,7 +70,7 @@ function todoListWriter(array) {
         taskDueDate.id = "due-date";
         taskDueDate.textContent = task.displayDueDate();
         
-        taskContainer.append(taskName);
+        taskContainer.append(taskName); 
         taskContainer.append(taskDesc);
         taskContainer.append(taskProject);
         taskContainer.append(taskDueDate);
@@ -83,10 +83,6 @@ function todoListWriter(array) {
 
 function arrayManager () {
     let array = [];
-
-    function appendToArray (task) {
-        array.append(task);
-    }
     
     function filterArray (criteria) {
         pass;
@@ -95,11 +91,21 @@ function arrayManager () {
     function sortArray (criteria) {
         pass;
     }
+};
 
-    function removeFromArray (id) {
+function storageManager () {
+
+    function readStorage () {
         pass;
     }
 
+    function appendToStorage (task) {
+        pass;
+    };
+
+    function deleteFromStorage (id) {
+        pass;
+    }
 }
 newTask = new Task("Make bed","","", new Date(2025, 2, 15));
 console.log(newTask.name);
