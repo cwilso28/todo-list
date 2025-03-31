@@ -13,7 +13,7 @@ class Task {
         this.id = id;
     };
 
-    createDate = new Date(new Date().toDateString());
+    // createDate = new Date(new Date().toDateString());
     // get dueDate() {
     //     return this.displayDueDate();
     // }
@@ -95,7 +95,12 @@ function arrayManager () {
 
 function storageManager () {
 
-    function readStorage () {
+    function readStorageKeys (storage) {
+        const storageKeys = Object.keys(storage);
+        return storageKeys;
+    }
+
+    function initialWriteToStorage () {
         pass;
     }
 
@@ -107,6 +112,26 @@ function storageManager () {
         pass;
     }
 }
+
+function storedDataConverter (key) {
+    
+    
+    let task = new Task();
+}
+
+function taskDataConverter (id) {
+    let taskHTML = document.getElementById(id);
+    let dict = {};
+    // Sort through the attributes and ID's to automatically populate the dictionary
+    
+    dict.name = taskHTML.querySelector(`#name`).textContent;
+    dict.desc = taskHTML.querySelector(`#desc`).textContent;
+    dict.project = taskHTML.querySelector(`#project`).textContent;
+    dict.dueDate = taskHTML.querySelector(`#due-date`).textContent;
+
+    return { dict }
+}
+
 newTask = new Task("Make bed","","", new Date(2025, 2, 15));
 console.log(newTask.name);
 // console.log(newTask.createDate)
