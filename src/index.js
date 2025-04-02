@@ -33,13 +33,29 @@ class Task {
 }
 
 class User {
+    constructor () {};
     request(manager) {
         manager.process_request(self);
     }
 }
 
 class taskManager {
-    pass;
+    constructor () {};
+    process_request (event) {
+        pass;
+    }
+
+    createTask () {
+        // Gather inputs from the HTML page
+        // Format inputs into a format compatible with storage
+        // Submit a task addition to the storage manager
+    }
+
+    storageRequest (manager) {
+        manager.process_request(self);
+    }
+
+
 }
 
 class taskListManager {
@@ -51,6 +67,15 @@ class projectManager {
 }
 
 class storageManager {
+    pass;
+}
+class displayManager {
+    constructor () {};
+
+    createForm () {
+        let popup = document.createElement("div")
+        popup.id = "popup";
+    }
     pass;
 }
 
