@@ -32,6 +32,28 @@ class Task {
     // createDate = dateFormatter(new Date()).formattedDate;
 }
 
+class User {
+    request(manager) {
+        manager.process_request(self);
+    }
+}
+
+class taskManager {
+    pass;
+}
+
+class taskListManager {
+    pass;
+}
+
+class projectManager {
+    pass;
+}
+
+class storageManager {
+    pass;
+}
+
 function dateFormatter(date) {
     const options = {
         day: '2-digit',
