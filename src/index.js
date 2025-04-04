@@ -13,12 +13,7 @@ class Task {
         this.id = id;
     };
 
-    // createDate = new Date(new Date().toDateString());
-    // get dueDate() {
-    //     return this.displayDueDate();
-    // }
-
-    displayDueDate () {
+    formatDateForDisplay () {
         let createDateTimeValue = this.createDate.getTime();
         let dueDateTimeValue = this.dueDate.getTime();
         if (createDateTimeValue === dueDateTimeValue) {
@@ -29,8 +24,45 @@ class Task {
         }
     }
 
-    // createDate = dateFormatter(new Date()).formattedDate;
+    createHTMLDiv () {
+        let taskContainer = document.createElement("div");
+        taskContainer.id = this.id;
+
+        let namePara = document.createElement("p");
+        namePara.textContent = this.name;
+
+        let descPara = document.createElement("p");
+        descPara.textContent = this.desc;
+
+        let projectPara = document.createElement("p");
+        projectPara.textContent = this.project;
+
+        let dueDatePara = document.createElement("p");
+        dueDatePara.textContent = this.formatDateForDisplay();
+
+        taskContainer.append(namePara);
+        taskContainer.append(descPara);
+        taskContainer.append(projectPara);
+        taskContainer.append(dueDatePara);
+
+        return taskContainer;
+    }
 }
+
+function dateFormatter(date) {
+    const options = {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+    };
+
+    const formatter = new Intl.DateTimeFormat("en-US", options)
+
+    let formattedDate = formatter.format(date);
+
+    return { formattedDate }
+}
+
 
 class User {
     constructor () {};
@@ -66,9 +98,6 @@ class projectManager {
     pass;
 }
 
-class storageManager {
-    pass;
-}
 class displayManager {
     constructor () {};
 
@@ -79,19 +108,6 @@ class displayManager {
     pass;
 }
 
-function dateFormatter(date) {
-    const options = {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric'
-    };
-
-    const formatter = new Intl.DateTimeFormat("en-US", options)
-
-    let formattedDate = formatter.format(date);
-
-    return { formattedDate }
-}
 
 function todoListWriter(array) {
     let taskListContainer = document.getElementById("tasks");
@@ -179,14 +195,16 @@ function taskDataConverter (id) {
     return { dict }
 }
 
+let taskContainer = document.getElementById("tasks");
 newTask = new Task("Make bed","","", new Date(2025, 2, 15));
-console.log(newTask.name);
+taskContainer.append(newTask.createHTMLDiv())
+console.log(newTask.createHTMLDiv());
 // console.log(newTask.createDate)
-console.log(newTask.displayDueDate());
+// console.log(newTask.displayDueDate());
 
-taskArray = [newTask];
+// taskArray = [newTask];
 
-todoListWriter(taskArray);
+// todoListWriter(taskArray);
 
 // dateOld = new Date(2025, 8, 15);
 // dateNew = new Date(2025, 8, 17);
