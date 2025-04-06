@@ -1,13 +1,15 @@
 class Task {
-    constructor(name, 
+    constructor( {name, 
                 desc = '', 
-                project = 'Inbox', 
-                dueDate = new Date(new Date().toDateString()), 
-                createDate = new Date(new Date().toDateString()), 
-                id = Date.now() + Math.random()){
+                project = 'Inbox',
+                priority = 1, 
+                dueDate = newDateWithoutTime(), 
+                createDate = newDateWithoutTime(), 
+                id = Date.now() + Math.random()} ){
         this.name = name;
         this.desc = desc;
         this.project = project;
+        this.priority = priority;
         this.dueDate = dueDate;
         this.createDate = createDate;
         this.id = id;
@@ -24,7 +26,7 @@ class Task {
         }
     }
 
-    createHTMLDiv () {
+    asHTML () {
         let taskContainer = document.createElement("div");
         taskContainer.id = this.id;
 
@@ -36,6 +38,9 @@ class Task {
 
         let projectPara = document.createElement("p");
         projectPara.textContent = this.project;
+        
+        let priorityPara = document.createElement("p");
+        priorityPara.textContent = this.priority;
 
         let dueDatePara = document.createElement("p");
         dueDatePara.textContent = this.formatDateForDisplay();
@@ -43,10 +48,23 @@ class Task {
         taskContainer.append(namePara);
         taskContainer.append(descPara);
         taskContainer.append(projectPara);
+        taskContainer.append(priorityPara);
         taskContainer.append(dueDatePara);
 
         return taskContainer;
     }
+
+    asDictionary () {
+        let dict = {};
+        for (let [key, value] of Object.entries(this)) {
+            dict[key] = value;
+        };
+        return dict;
+    }
+}
+
+function newDateWithoutTime () {
+    return new Date(new Date().toDateString())
 }
 
 function dateFormatter(date) {
@@ -196,9 +214,11 @@ function taskDataConverter (id) {
 }
 
 let taskContainer = document.getElementById("tasks");
-newTask = new Task("Make bed","","", new Date(2025, 2, 15));
-taskContainer.append(newTask.createHTMLDiv())
-console.log(newTask.createHTMLDiv());
+newTask = new Task({ name: "Make bed", dueDate: new Date(2025, 2, 15) });
+taskContainer.append(newTask.asHTML())
+console.log(newTask.asHTML());
+console.log(newTask.createDate);
+console.log(newTask.asDictionary());
 // console.log(newTask.createDate)
 // console.log(newTask.displayDueDate());
 
