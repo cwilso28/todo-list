@@ -126,54 +126,6 @@ class displayManager {
     pass;
 }
 
-
-function todoListWriter(array) {
-    let taskListContainer = document.getElementById("tasks");
-
-    for (const task of array) {
-        let taskContainer = document.createElement("div");
-        taskContainer.id = task.id;
-        taskContainer.dataset.createDate = task.createDate;
-
-        let taskName = document.createElement("p");
-        taskName.id = "name";
-        taskName.textContent = task.name;
-
-        let taskDesc = document.createElement("p");
-        taskDesc.id = "desc";
-        taskDesc.textContent = task.desc;
-
-        let taskProject = document.createElement("p");
-        taskProject.id = "project";
-        taskProject.textContent = task.project;
-
-        let taskDueDate = document.createElement("p");
-        taskDueDate.id = "due-date";
-        taskDueDate.textContent = task.displayDueDate();
-        
-        taskContainer.append(taskName); 
-        taskContainer.append(taskDesc);
-        taskContainer.append(taskProject);
-        taskContainer.append(taskDueDate);
-
-        
-
-        taskListContainer.append(taskContainer);
-    }
-}
-
-function arrayManager () {
-    let array = [];
-    
-    function filterArray (criteria) {
-        pass;
-    }
-
-    function sortArray (criteria) {
-        pass;
-    }
-};
-
 function storageManager () {
 
     function readStorageKeys (storage) {
@@ -186,7 +138,9 @@ function storageManager () {
     }
 
     function appendToStorage (task) {
-        pass;
+        if (!localStorage.getItem(task.id)) {
+            localStorage.setItem(task.id, task.asDictionary());
+        }
     };
 
     function deleteFromStorage (id) {
