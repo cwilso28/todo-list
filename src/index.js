@@ -137,15 +137,20 @@ function storageManager () {
         pass;
     }
 
+    function getFromStorage(id) {
+        let task = localStorage.getItem(id);
+        return task
+    }
+
     function appendToStorage (task) {
-        if (!localStorage.getItem(task.id)) {
-            localStorage.setItem(task.id, task.asDictionary());
-        }
+        localStorage.setItem(task.id, task.asDictionary());
     };
 
     function deleteFromStorage (id) {
         pass;
     }
+
+    return { readStorageKeys, initialWriteToStorage, appendToStorage, deleteFromStorage, getFromStorage }
 }
 
 function storedDataConverter (key) {
