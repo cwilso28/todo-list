@@ -10,8 +10,8 @@ class Task {
         this.desc = desc;
         this.project = project;
         this.priority = priority;
-        this.dueDate = dueDate;
-        this.createDate = createDate;
+        this.dueDate = new Date(dueDate);
+        this.createDate = new Date(createDate);
         this.id = id;
     };
 
@@ -143,7 +143,7 @@ function storageManager () {
     }
 
     function appendToStorage (task) {
-        localStorage.setItem(task.id, task.asDictionary());
+        localStorage.setItem(task.id, JSON.stringify(task.asDictionary()));
     };
 
     function deleteFromStorage (id) {
@@ -172,12 +172,29 @@ function taskDataConverter (id) {
     return { dict }
 }
 
+localStorage.clear();
+
 let taskContainer = document.getElementById("tasks");
 newTask = new Task({ name: "Make bed", dueDate: new Date(2025, 2, 15) });
 taskContainer.append(newTask.asHTML())
 console.log(newTask.asHTML());
 console.log(newTask.createDate);
 console.log(newTask.asDictionary());
+let storageManagerInstance = new storageManager;
+storageManagerInstance.appendToStorage(newTask);
+
+console.log(storageManagerInstance.getFromStorage(newTask.id))
+let repeatTask = storageManagerInstance.getFromStorage(newTask.id);
+newTask2 = new Task(repeatTask);
+taskContainer.append(newTask2.asHTML());
+console.log(newTask2.asDictionary());
+
+let repeatTaskParsed = JSON.parse(storageManagerInstance.getFromStorage(newTask.id));
+console.log(repeatTaskParsed);
+newTask3 = new Task(repeatTaskParsed);
+console.log(newTask3.asHTML());
+taskContainer.append(newTask3.asHTML())
+// taskContainer.append(newTask3.asHTML());
 // console.log(newTask.createDate)
 // console.log(newTask.displayDueDate());
 
