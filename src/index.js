@@ -126,50 +126,30 @@ class displayManager {
     pass;
 }
 
-function storageManager () {
+class storageManager {
+    constructor () {};
 
-    function readStorageKeys (storage) {
+    readStorageKeys (storage) {
         const storageKeys = Object.keys(storage);
         return storageKeys;
     }
 
-    function initialWriteToStorage () {
+    initialWriteToStorage () {
         pass;
     }
 
-    function getFromStorage(id) {
+    getFromStorage(id) {
         let task = localStorage.getItem(id);
         return task
     }
 
-    function appendToStorage (task) {
+    appendToStorage (task) {
         localStorage.setItem(task.id, JSON.stringify(task.asDictionary()));
     };
 
-    function deleteFromStorage (id) {
+    deleteFromStorage (id) {
         pass;
     }
-
-    return { readStorageKeys, initialWriteToStorage, appendToStorage, deleteFromStorage, getFromStorage }
-}
-
-function storedDataConverter (key) {
-    
-    
-    let task = new Task();
-}
-
-function taskDataConverter (id) {
-    let taskHTML = document.getElementById(id);
-    let dict = {};
-    // Sort through the attributes and ID's to automatically populate the dictionary
-    
-    dict.name = taskHTML.querySelector(`#name`).textContent;
-    dict.desc = taskHTML.querySelector(`#desc`).textContent;
-    dict.project = taskHTML.querySelector(`#project`).textContent;
-    dict.dueDate = taskHTML.querySelector(`#due-date`).textContent;
-
-    return { dict }
 }
 
 localStorage.clear();
