@@ -129,6 +129,29 @@ class displayManager {
 class storageManager {
     constructor () {};
 
+    getStorageState (task) {
+        let state = task.state;
+        return state;
+    }
+
+    parseState (state) {
+        if (state === "init") {
+            pass;
+        }
+
+        else if (state === "new") {
+            pass;
+        }
+
+        else if (state === "remove") {
+            pass;
+        }
+
+        else if (state === "modify") {
+            pass;
+        }
+    }
+
     readStorageKeys (storage) {
         const storageKeys = Object.keys(storage);
         return storageKeys;
