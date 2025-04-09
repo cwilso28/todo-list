@@ -138,17 +138,29 @@ class storageManager {
         pass;
     }
 
-    getFromStorage(id) {
-        let task = localStorage.getItem(id);
-        return task
+    getItemFromStorage(key) {
+        let taskDict = localStorage.getItem(key);
+        let taskParsed = JSON.parse(taskDict);
+        return taskParsed
+    }
+
+    getAllFromStorage() {
+        const storageKeys = Object.keys(localStorage);
+        let dict = {};
+
+        for (let key of storageKeys) {
+            dict[key] = this.getItemFromStorage(key);
+        }
+
+        return dict;
     }
 
     appendToStorage (task) {
         localStorage.setItem(task.id, JSON.stringify(task.asDictionary()));
     };
 
-    deleteFromStorage (id) {
-        pass;
+    deleteFromStorage (key) {
+        localStorage.removeItem(key);
     }
 }
 
@@ -163,17 +175,16 @@ console.log(newTask.asDictionary());
 let storageManagerInstance = new storageManager;
 storageManagerInstance.appendToStorage(newTask);
 
-console.log(storageManagerInstance.getFromStorage(newTask.id))
-let repeatTask = storageManagerInstance.getFromStorage(newTask.id);
+console.log(storageManagerInstance.getItemFromStorage(newTask.id))
+let repeatTask = storageManagerInstance.getItemFromStorage(newTask.id);
 newTask2 = new Task(repeatTask);
 taskContainer.append(newTask2.asHTML());
 console.log(newTask2.asDictionary());
+storageManagerInstance.appendToStorage(newTask2);
 
-let repeatTaskParsed = JSON.parse(storageManagerInstance.getFromStorage(newTask.id));
-console.log(repeatTaskParsed);
-newTask3 = new Task(repeatTaskParsed);
-console.log(newTask3.asHTML());
-taskContainer.append(newTask3.asHTML())
+let storageDict = storageManagerInstance.getAllFromStorage();
+console.log(Object.keys(storageDict));
+
 // taskContainer.append(newTask3.asHTML());
 // console.log(newTask.createDate)
 // console.log(newTask.displayDueDate());
