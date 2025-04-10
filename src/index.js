@@ -99,12 +99,15 @@ class taskManager {
         // Gather inputs from the HTML page
         // Format inputs into a format compatible with storage
         // Submit a task addition to the storage manager
-    }
+    };
 
-    storageRequest (manager) {
-        manager.process_request(self);
-    }
+    storageWrite(task) {
+        this.storage.appendToStorage(task);
+    };
 
+    deleteFromStorage(key) {
+        this.storage.deleteFromStorage(key);
+    }
 
 }
 
@@ -123,7 +126,10 @@ class displayManager {
         let popup = document.createElement("div")
         popup.id = "popup";
     }
-    pass;
+    
+    greyBackground() {
+        pass;
+    }
 }
 
 class storageManager {
