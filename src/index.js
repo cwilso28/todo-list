@@ -123,8 +123,36 @@ class displayManager {
     constructor () {};
 
     createForm () {
-        let popup = document.createElement("div")
-        popup.id = "popup";
+        let popup = document.createElement("div");
+        popup.id = "popup-container";
+
+        let formContainer = document.createElement("form");
+        formContainer.id = "form-container";
+        formContainer.action = "";
+        formContainer.method = "get";
+        popup.append(formContainer);
+
+        // Create field for task name
+        let nameFieldContainer = document.createElement("div");
+        let nameFieldLabel = document.createElement("label");
+        let nameFieldName = "task-name";
+        nameFieldLabel.for = nameFieldName;
+        nameFieldLabel.textContent = "Task Name:";
+
+        let nameFieldInput = document.createElement("input");
+        nameFieldInput.type = "text";
+        nameFieldInput.id = nameFieldName;
+        nameFieldInput.name = nameFieldName;
+        nameFieldInput.required = true;
+        nameFieldContainer.append(nameFieldLabel);
+        nameFieldContainer.append(nameFieldInput);
+        formContainer.append(nameFieldContainer);
+
+        // Create field for task description
+        let descFieldContainer = document.createElement("div");
+        let descFieldLabel = document.createElement("label");
+
+        return popup;
     }
     
     greyBackground() {
@@ -190,6 +218,10 @@ storageManagerInstance.appendToStorage(newTask2);
 
 let storageDict = storageManagerInstance.getAllFromStorage();
 console.log(Object.keys(storageDict));
+
+let body = document.querySelector("body");
+let display = new displayManager;
+body.append(display.createForm());
 
 // taskContainer.append(newTask3.asHTML());
 // console.log(newTask.createDate)
