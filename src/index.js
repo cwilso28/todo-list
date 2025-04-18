@@ -134,11 +134,12 @@ class displayManager {
 
         // Create field for task name
         let nameFieldContainer = document.createElement("div");
+        // label
         let nameFieldLabel = document.createElement("label");
         let nameFieldName = "task-name";
         nameFieldLabel.for = nameFieldName;
         nameFieldLabel.textContent = "Task Name:";
-
+        // input
         let nameFieldInput = document.createElement("input");
         nameFieldInput.type = "text";
         nameFieldInput.id = nameFieldName;
@@ -150,7 +151,50 @@ class displayManager {
 
         // Create field for task description
         let descFieldContainer = document.createElement("div");
+        // label
         let descFieldLabel = document.createElement("label");
+        let descFieldName = "task-desc";
+        descFieldLabel.for = descFieldName;
+        descFieldLabel.textContent = "Description:";
+        // input
+        let descFieldInput = document.createElement("input");
+        descFieldInput.type = "text";
+        descFieldInput.id = descFieldName;
+        descFieldInput.name = descFieldName;
+        descFieldContainer.append(descFieldLabel);
+        descFieldContainer.append(descFieldInput);
+        formContainer.append(descFieldContainer);
+
+        // Create dropdown for priority
+        let priorityFieldContainer = document.createElement("div");
+        //label
+        let priorityFieldLabel = document.createElement("label");
+        let priorityFieldName = "task-priority";
+        priorityFieldLabel.for = priorityFieldName;
+        priorityFieldLabel.textContent = "Priority:";
+        //input
+        let priorityFieldInput = document.createElement("select");
+        priorityFieldInput.id = priorityFieldName;
+        priorityFieldInput.name = priorityFieldName;
+        let p1 = document.createElement("option");
+        p1.value = 1;
+        p1.textContent = "1";
+        priorityFieldInput.append(p1);
+        let p2 = document.createElement("option");
+        p2.value = 2;
+        p2.textContent = "2";
+        priorityFieldInput.append(p2);
+        let p3 = document.createElement("option");
+        p3.value = 3;
+        p3.textContent = "3";
+        priorityFieldInput.append(p3);
+        let p4 = document.createElement("option");
+        p4.value = 4;
+        p4.textContent = "4";
+        priorityFieldInput.append(p4);
+        priorityFieldContainer.append(priorityFieldLabel);
+        priorityFieldContainer.append(priorityFieldInput);
+        formContainer.append(priorityFieldContainer);
 
         return popup;
     }
