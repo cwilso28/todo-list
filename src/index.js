@@ -196,6 +196,22 @@ class displayManager {
         priorityFieldContainer.append(priorityFieldInput);
         formContainer.append(priorityFieldContainer);
 
+        // Create due date field
+        let dueDateContainer = document.createElement("div");
+        // label
+        let dueDateLabel = document.createElement("label");
+        let dueDateName = "task-duedate";
+        dueDateLabel.for = dueDateName;
+        dueDateLabel.textContent = "Due date:";
+        // input
+        let dueDateInput = document.createElement("input");
+        dueDateInput.id = dueDateName;
+        dueDateInput.name = dueDateName;
+        dueDateInput.type = "date";
+        dueDateContainer.append(dueDateLabel);
+        dueDateContainer.append(dueDateInput);
+        formContainer.append(dueDateContainer);
+
         return popup;
     }
     
