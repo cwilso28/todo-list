@@ -212,11 +212,30 @@ class displayManager {
         dueDateContainer.append(dueDateInput);
         formContainer.append(dueDateContainer);
 
+        // Create submit button
+        let submitButton = document.createElement("button");
+        submitButton.id = "submit-button";
+        submitButton.class = "popup-button";
+        submitButton.type = "submit";
+        submitButton.textContent = "Submit";
+
+        popup.append(submitButton);
+
+        // Create cancel button
+        let cancelButton = document.createElement("button");
+        cancelButton.id = "cancel-button";
+        cancelButton.class = "popup-button";
+        cancelButton.type = "submit";
+        cancelButton.textContent = "Cancel";
+
+        popup.append(cancelButton);
+
         return popup;
     }
     
     greyBackground() {
-        pass;
+        let backgroundOverlay = document.createElement("div");
+
     }
 }
 
