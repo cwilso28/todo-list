@@ -229,14 +229,40 @@ class displayManager {
         cancelButton.textContent = "Cancel";
 
         popup.append(cancelButton);
+        popup.style.display = "none";
 
         return popup;
     }
     
     greyBackground() {
         let backgroundOverlay = document.createElement("div");
+        backgroundOverlay.id = "greyBackgroundOverlay"
+        backgroundOverlay.style.display = "none";
+        backgroundOverlay.style.backgroundColor = "rgb(0 0 0 /0.5)";
 
+        return backgroundOverlay;
     }
+
+    showPopup() {
+        let bodyContainer = document.querySelector("body");
+        let backgroundOverlay = this.greyBackground();
+        backgroundOverlay.style.display = "block";
+
+        let form = this.createForm();
+        form.style.display = "block";
+
+        bodyContainer.append(backgroundOverlay);
+        bodyContainer.append(form);
+    }
+
+    addTaskButtonListener() {
+        let addTaskButtonContainer = document.getElementById("new-task-button");
+
+        addTaskButtonContainer.addEventListener("click", (e) => {
+            this.showPopup();
+        }
+        );
+    };
 }
 
 class storageManager {
@@ -298,9 +324,8 @@ storageManagerInstance.appendToStorage(newTask2);
 let storageDict = storageManagerInstance.getAllFromStorage();
 console.log(Object.keys(storageDict));
 
-let body = document.querySelector("body");
 let display = new displayManager;
-body.append(display.createForm());
+display.addTaskButtonListener();
 
 // taskContainer.append(newTask3.asHTML());
 // console.log(newTask.createDate)
