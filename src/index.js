@@ -250,7 +250,7 @@ class displayManager {
 
     removeByElementID(id) {
         let elementContainer = document.getElementById(id);
-        elementContainer.textContent = '';
+        elementContainer.remove();
     }
 
     showByElementID(id) {
@@ -268,6 +268,8 @@ class displayManager {
 
         bodyContainer.append(backgroundOverlay);
         bodyContainer.append(form);
+
+        this.addCancelButtonListener();
     }
 
     addTaskButtonListener() {
@@ -279,6 +281,16 @@ class displayManager {
         }
         );
     };
+
+    addCancelButtonListener() {
+        let cancelButtonContainer = document.getElementById("cancel-button");
+
+        cancelButtonContainer.addEventListener("click", (e) => {
+            this.removeByElementID("popup-container");
+            this.removeByElementID("greyBackgroundOverlay");
+            this.showByElementID("new-task-button");
+        })
+    }
 }
 
 class storageManager {
