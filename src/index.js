@@ -243,6 +243,21 @@ class displayManager {
         return backgroundOverlay;
     }
 
+    hideByElementID(id) {
+        let elementContainer = document.getElementById(id);
+        elementContainer.style.display = "none";
+    }
+
+    removeByElementID(id) {
+        let elementContainer = document.getElementById(id);
+        elementContainer.textContent = '';
+    }
+
+    showByElementID(id) {
+        let elementContainer = document.getElementById(id);
+        elementContainer.style.display = "block";
+    }
+
     showPopup() {
         let bodyContainer = document.querySelector("body");
         let backgroundOverlay = this.greyBackground();
@@ -260,6 +275,7 @@ class displayManager {
 
         addTaskButtonContainer.addEventListener("click", (e) => {
             this.showPopup();
+            this.hideByElementID("new-task-button");
         }
         );
     };
