@@ -122,6 +122,8 @@ class projectManager {
 class displayManager {
     constructor () {};
 
+    storageInstance = new storageManager;
+
     createForm () {
         let popup = document.createElement("div");
         popup.id = "popup-container";
@@ -219,16 +221,16 @@ class displayManager {
         submitButton.type = "submit";
         submitButton.textContent = "Submit";
 
-        popup.append(submitButton);
+        formContainer.append(submitButton);
 
         // Create cancel button
         let cancelButton = document.createElement("button");
         cancelButton.id = "cancel-button";
         cancelButton.class = "popup-button";
-        cancelButton.type = "submit";
+        cancelButton.type = "button";
         cancelButton.textContent = "Cancel";
 
-        popup.append(cancelButton);
+        formContainer.append(cancelButton);
         popup.style.display = "none";
 
         return popup;
@@ -269,7 +271,20 @@ class displayManager {
         bodyContainer.append(backgroundOverlay);
         bodyContainer.append(form);
 
+        this.addSubmitButtonListener();
         this.addCancelButtonListener();
+    }
+
+    popupSubmit() {
+        let taskName = document.getElementById("task-name").value;
+        let desc = document.getElementById("task-desc").value;
+        let priority = document.getElementById("task-priority").value;
+        let dueDate = document.getElementById("task-duedate").value;
+        
+        let popupDict = {name: taskName, desc: desc, priority: priority, dueDate: dueDate}
+        let task = new Task(popupDict);
+
+        this.storageInstance.appendToStorage(task);
     }
 
     addTaskButtonListener() {
@@ -286,6 +301,18 @@ class displayManager {
         let cancelButtonContainer = document.getElementById("cancel-button");
 
         cancelButtonContainer.addEventListener("click", (e) => {
+            this.removeByElementID("popup-container");
+            this.removeByElementID("greyBackgroundOverlay");
+            this.showByElementID("new-task-button");
+        })
+    }
+
+    addSubmitButtonListener() {
+        let popupContainer = document.getElementById("popup-container");
+
+        popupContainer.addEventListener("submit", (e) => {
+            e.preventDefault();
+            this.popupSubmit();
             this.removeByElementID("popup-container");
             this.removeByElementID("greyBackgroundOverlay");
             this.showByElementID("new-task-button");
