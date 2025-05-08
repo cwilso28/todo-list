@@ -102,11 +102,11 @@ class taskManager {
     };
 
     storageWrite(task) {
-        this.storage.appendToStorage(task);
+        storage.appendToStorage(task);
     };
 
     deleteFromStorage(key) {
-        this.storage.deleteFromStorage(key);
+        storage.deleteFromStorage(key);
     }
 
 }
@@ -122,7 +122,7 @@ class projectManager {
 class displayManager {
     constructor () {};
 
-    storageInstance = new storageManager;
+    // storageInstance = new storageManager;
 
     createForm () {
         let popup = document.createElement("div");
@@ -284,7 +284,8 @@ class displayManager {
         let popupDict = {name: taskName, desc: desc, priority: priority, dueDate: dueDate}
         let task = new Task(popupDict);
 
-        this.storageInstance.appendToStorage(task);
+        storage.appendToStorage(task);
+        // Tell the task list manager to read from storage
     }
 
     addTaskButtonListener() {
@@ -381,6 +382,9 @@ console.log(Object.keys(storageDict));
 
 let display = new displayManager;
 display.addTaskButtonListener();
+let storage = new storageManager;
+let tasks = new taskManager;
+let taskList = new taskListManager;
 
 // taskContainer.append(newTask3.asHTML());
 // console.log(newTask.createDate)
