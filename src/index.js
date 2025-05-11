@@ -10,8 +10,8 @@ class Task {
         this.desc = desc;
         this.project = project;
         this.priority = priority;
-        this.dueDate = new Date(dueDate);
-        this.createDate = new Date(createDate);
+        this.dueDate = new Date(new Date(dueDate).toDateString());
+        this.createDate = new Date(new Date(createDate).toDateString());
         this.id = id;
     };
 
@@ -122,6 +122,7 @@ class taskListManager {
             let storedTasks = storageManagerInstance.getAllFromStorage();
 
             for (let [key, value] of Object.entries(storedTasks)) {
+                console.log(value);
                 let newTask = new Task(value)
                 this.appendToTaskList(newTask);
             }
@@ -304,6 +305,7 @@ class displayManager {
         let dueDate = document.getElementById("task-duedate").value;
         
         let popupDict = {name: taskName, desc: desc, priority: priority, dueDate: dueDate}
+        console.log(popupDict);
         let task = new Task(popupDict);
 
         storageManagerInstance.appendToStorage(task);
