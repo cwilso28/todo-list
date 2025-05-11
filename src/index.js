@@ -102,17 +102,39 @@ class taskManager {
     };
 
     storageWrite(task) {
-        storage.appendToStorage(task);
+        storageManagerInstance.appendToStorage(task);
     };
 
     deleteFromStorage(key) {
-        storage.deleteFromStorage(key);
+        storageManagerInstance.deleteFromStorage(key);
     }
 
 }
 
 class taskListManager {
-    pass;
+    constructor () {};
+    taskList = [];
+
+    loadFromStorage () {
+        if (localStorage.length > 0) {
+            this.clearTaskList();
+
+            let storedTasks = storageManagerInstance.getAllFromStorage();
+
+            for (let [key, value] of Object.entries(storedTasks)) {
+                let newTask = new Task(value)
+                this.appendToTaskList(newTask);
+            }
+        };
+    }
+
+    clearTaskList () {
+        this.taskList = [];
+    }
+
+    appendToTaskList (task) {
+        this.taskList.push(task);
+    }
 }
 
 class projectManager {
@@ -284,7 +306,7 @@ class displayManager {
         let popupDict = {name: taskName, desc: desc, priority: priority, dueDate: dueDate}
         let task = new Task(popupDict);
 
-        storage.appendToStorage(task);
+        storageManagerInstance.appendToStorage(task);
         // Tell the task list manager to read from storage
     }
 
@@ -319,6 +341,16 @@ class displayManager {
             this.showByElementID("new-task-button");
         })
     }
+
+    pushToTaskListContainer () {
+        let taskListContainer = document.getElementById("tasks");
+        taskListContainer.textContent = '';
+        taskListManagerInstance.loadFromStorage();
+        let list = taskListManagerInstance.taskList;
+        for (let i = 0; i < list.length; i++) {
+            taskListContainer.append(list[i].asHTML());
+        }
+    }
 }
 
 class storageManager {
@@ -352,6 +384,7 @@ class storageManager {
 
     appendToStorage (task) {
         localStorage.setItem(task.id, JSON.stringify(task.asDictionary()));
+        displayManagerInstance.pushToTaskListContainer();
     };
 
     deleteFromStorage (key) {
@@ -361,30 +394,28 @@ class storageManager {
 
 localStorage.clear();
 
-let taskContainer = document.getElementById("tasks");
-newTask = new Task({ name: "Make bed", dueDate: new Date(2025, 2, 15) });
-taskContainer.append(newTask.asHTML())
-console.log(newTask.asHTML());
-console.log(newTask.createDate);
-console.log(newTask.asDictionary());
+let displayManagerInstance = new displayManager;
 let storageManagerInstance = new storageManager;
+let taskManagerInstance = new taskManager;
+let taskListManagerInstance = new taskListManager;
+
+newTask = new Task({ name: "Make bed", dueDate: new Date(2025, 2, 15) });
+// let storageManagerInstance = new storageManager;
 storageManagerInstance.appendToStorage(newTask);
 
-console.log(storageManagerInstance.getItemFromStorage(newTask.id))
+console.log(displayManagerInstance);
+console.log(storageManagerInstance);
+console.log(taskManagerInstance);
+console.log(taskListManagerInstance);
+// console.log(storage.getItemFromStorage(newTask.id))
 let repeatTask = storageManagerInstance.getItemFromStorage(newTask.id);
 newTask2 = new Task(repeatTask);
-taskContainer.append(newTask2.asHTML());
-console.log(newTask2.asDictionary());
 storageManagerInstance.appendToStorage(newTask2);
 
-let storageDict = storageManagerInstance.getAllFromStorage();
-console.log(Object.keys(storageDict));
+displayManagerInstance.addTaskButtonListener();
 
-let display = new displayManager;
-display.addTaskButtonListener();
-let storage = new storageManager;
-let tasks = new taskManager;
-let taskList = new taskListManager;
+// display.pushToTaskListContainer();
+
 
 // taskContainer.append(newTask3.asHTML());
 // console.log(newTask.createDate)
