@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 class Task {
     constructor( {name, 
                 desc = '', 
@@ -10,19 +12,21 @@ class Task {
         this.desc = desc;
         this.project = project;
         this.priority = priority;
-        this.dueDate = new Date(new Date(dueDate).toDateString());
-        this.createDate = new Date(new Date(createDate).toDateString());
+        // this.dueDate = new Date(new Date(dueDate).toDateString());
+        // this.createDate = new Date(new Date(createDate).toDateString());
+        this.dueDate = formatDate(dueDate);
+        this.createDate = formatDate(createDate);
         this.id = id;
     };
 
     formatDateForDisplay () {
-        let createDateTimeValue = this.createDate.getTime();
-        let dueDateTimeValue = this.dueDate.getTime();
-        if (createDateTimeValue === dueDateTimeValue) {
+        // let createDateTimeValue = this.createDate.getTime();
+        // let dueDateTimeValue = this.dueDate.getTime();
+        if (this.dueDate === this.createDate) {
             return "Today";
         }
         else {
-            return dateFormatter(this.dueDate).formattedDate;
+            return this.dueDate;
         }
     }
 
@@ -63,24 +67,17 @@ class Task {
     }
 }
 
+function formatDate(date) {
+    return format(date, "MMM dd, yyyy");
+}
+
 function newDateWithoutTime () {
-    return new Date(new Date().toDateString())
+    return formatDate(new Date());
 }
 
-function dateFormatter(date) {
-    const options = {
-        day: '2-digit',
-        month: 'short',
-        year: 'numeric'
-    };
-
-    const formatter = new Intl.DateTimeFormat("en-US", options)
-
-    let formattedDate = formatter.format(date);
-
-    return { formattedDate }
+function formatFormDate(date) {
+    return format(date, "yyyy-MM-dd");
 }
-
 
 class User {
     constructor () {};
@@ -233,6 +230,7 @@ class displayManager {
         dueDateInput.id = dueDateName;
         dueDateInput.name = dueDateName;
         dueDateInput.type = "date";
+        dueDateInput.value = formatFormDate(new Date());
         dueDateContainer.append(dueDateLabel);
         dueDateContainer.append(dueDateInput);
         formContainer.append(dueDateContainer);
@@ -302,7 +300,7 @@ class displayManager {
         let taskName = document.getElementById("task-name").value;
         let desc = document.getElementById("task-desc").value;
         let priority = document.getElementById("task-priority").value;
-        let dueDate = document.getElementById("task-duedate").value;
+        let dueDate = document.getElementById("task-duedate").value.replace(/-/g,'\/');
         
         let popupDict = {name: taskName, desc: desc, priority: priority, dueDate: dueDate}
         console.log(popupDict);
@@ -401,7 +399,8 @@ let storageManagerInstance = new storageManager;
 let taskManagerInstance = new taskManager;
 let taskListManagerInstance = new taskListManager;
 
-newTask = new Task({ name: "Make bed", dueDate: new Date(2025, 2, 15) });
+// newTask = new Task({ name: "Make bed", dueDate: new Date(2025, 2, 15) });
+let newTask = new Task({ name: "Make bed", dueDate: new Date("Mar 15,2025") });
 // let storageManagerInstance = new storageManager;
 storageManagerInstance.appendToStorage(newTask);
 
@@ -411,7 +410,7 @@ console.log(taskManagerInstance);
 console.log(taskListManagerInstance);
 // console.log(storage.getItemFromStorage(newTask.id))
 let repeatTask = storageManagerInstance.getItemFromStorage(newTask.id);
-newTask2 = new Task(repeatTask);
+let newTask2 = new Task(repeatTask);
 storageManagerInstance.appendToStorage(newTask2);
 
 displayManagerInstance.addTaskButtonListener();
