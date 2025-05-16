@@ -45,11 +45,16 @@ class Task {
         let dueDatePara = document.createElement("p");
         dueDatePara.textContent = this.formatDateForDisplay();
 
+        let deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.id = "task-delete-button";
+
         taskContainer.append(namePara);
         taskContainer.append(descPara);
         taskContainer.append(projectPara);
         taskContainer.append(priorityPara);
         taskContainer.append(dueDatePara);
+        taskContainer.append(deleteButton);
 
         return taskContainer;
     }
@@ -115,7 +120,6 @@ class taskListManager {
             let storedTasks = storageManagerInstance.getAllFromStorage();
 
             for (let [key, value] of Object.entries(storedTasks)) {
-                console.log(value);
                 let newTask = new Task(value)
                 this.appendToTaskList(newTask);
             }
@@ -338,6 +342,16 @@ class displayManager {
         })
     }
 
+    addDeleteButtonListener() {
+        let taskListContainer = document.getElementById("tasks");
+
+        taskListContainer.addEventListener("click", (e) => {
+            if (e.target && e.target.matches("#task-delete-button")) {
+                storageManagerInstance.deleteFromStorage(e.target.parentNode.id);
+            }
+        })
+    }
+
     pushToTaskListContainer () {
         let taskListContainer = document.getElementById("tasks");
         taskListContainer.textContent = '';
@@ -385,6 +399,7 @@ class storageManager {
 
     deleteFromStorage (key) {
         localStorage.removeItem(key);
+        displayManagerInstance.pushToTaskListContainer();
     }
 }
 
@@ -410,6 +425,7 @@ let newTask2 = new Task(repeatTask);
 storageManagerInstance.appendToStorage(newTask2);
 
 displayManagerInstance.addTaskButtonListener();
+displayManagerInstance.addDeleteButtonListener();
 
 // display.pushToTaskListContainer();
 
