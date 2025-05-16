@@ -12,16 +12,12 @@ class Task {
         this.desc = desc;
         this.project = project;
         this.priority = priority;
-        // this.dueDate = new Date(new Date(dueDate).toDateString());
-        // this.createDate = new Date(new Date(createDate).toDateString());
         this.dueDate = formatDate(dueDate);
         this.createDate = formatDate(createDate);
         this.id = id;
     };
 
     formatDateForDisplay () {
-        // let createDateTimeValue = this.createDate.getTime();
-        // let dueDateTimeValue = this.dueDate.getTime();
         if (this.dueDate === this.createDate) {
             return "Today";
         }
