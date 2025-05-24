@@ -139,6 +139,29 @@ class projectManager {
     pass;
 }
 
+class filterManager {
+    // Generic filter template that works for date filters and project filters
+    fixedFilterTemplate(name) {
+        let nameLower = name.toLowerCase();
+        let fixedFilterContainer = document.createElement("div");
+        fixedFilterContainer.class = "fixed-filter";
+        let filterInput = document.createElement("input");
+        filterInput.type = "radio";
+        filterInput.id = nameLower;
+        filterInput.value = nameLower;
+        filterInput.name = "fixed-label";
+
+        let filterLabel = document.createElement("label");
+        filterLabel.for = nameLower;
+        filterLabel.textContent = name;
+
+        fixedFilterContainer.append(filterInput);
+        fixedFilterContainer.append(filterLabel);
+
+    }
+    // Prepopulation for date filters
+}
+
 class displayManager {
     constructor () {};
 
