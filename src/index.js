@@ -123,7 +123,10 @@ class taskListManager {
                 let newTask = new Task(value)
                 this.appendToTaskList(newTask);
             }
-        };
+        }
+        else if (localStorage.length === 0) {
+            this.clearTaskList();
+        }
     }
 
     clearTaskList () {
@@ -141,6 +144,10 @@ class projectManager {
 
 class filterManager {
     // Generic filter template that works for date filters and project filters
+    createFilterForm  () {
+
+    }
+
     fixedFilterTemplate(name) {
         let nameLower = name.toLowerCase();
         let fixedFilterContainer = document.createElement("div");
@@ -172,7 +179,7 @@ class displayManager {
         popup.id = "popup-container";
 
         let formContainer = document.createElement("form");
-        formContainer.id = "form-container";
+        formContainer.id = "input-form-container";
         formContainer.action = "";
         formContainer.method = "get";
         popup.append(formContainer);
