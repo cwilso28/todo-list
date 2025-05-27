@@ -114,8 +114,10 @@ class taskListManager {
     taskList = [];
 
     loadFromStorage () {
+        this.clearTaskList();
+
         if (localStorage.length > 0) {
-            this.clearTaskList();
+            
 
             let storedTasks = storageManagerInstance.getAllFromStorage();
 
@@ -123,9 +125,6 @@ class taskListManager {
                 let newTask = new Task(value)
                 this.appendToTaskList(newTask);
             }
-        }
-        else if (localStorage.length === 0) {
-            this.clearTaskList();
         }
     }
 
@@ -143,9 +142,17 @@ class projectManager {
 }
 
 class filterManager {
+    constructor() {};
+    
     // Generic filter template that works for date filters and project filters
-    createFilterForm  () {
+    createFilterForm = () => {
+        let filterContainer = document.getElementById("filters");
+        let filterFormContainer = document.createElement("form");
+        filterFormContainer.action = '';
+        filterFormContainer.method = 'get';
+        filterFormContainer.id = "filter-container"
 
+        filterContainer.append(filterFormContainer);
     }
 
     fixedFilterTemplate(name) {
@@ -166,6 +173,8 @@ class filterManager {
         fixedFilterContainer.append(filterLabel);
 
     }
+
+
     // Prepopulation for date filters
 }
 
@@ -439,6 +448,7 @@ let displayManagerInstance = new displayManager;
 let storageManagerInstance = new storageManager;
 let taskManagerInstance = new taskManager;
 let taskListManagerInstance = new taskListManager;
+let filterManagerInstance = new filterManager;
 
 // newTask = new Task({ name: "Make bed", dueDate: new Date(2025, 2, 15) });
 let newTask = new Task({ name: "Make bed", dueDate: new Date("Mar 15,2025") });
@@ -456,6 +466,8 @@ storageManagerInstance.appendToStorage(newTask2);
 
 displayManagerInstance.addTaskButtonListener();
 displayManagerInstance.addDeleteButtonListener();
+
+filterManagerInstance.createFilterForm();
 
 // display.pushToTaskListContainer();
 
