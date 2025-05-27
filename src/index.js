@@ -142,21 +142,27 @@ class projectManager {
 }
 
 class filterManager {
-    constructor() {};
+    constructor() {
+        this.createFilterForm()
+        this.fixedFilterTemplate("Today", true);
+        this.fixedFilterTemplate("Tomorrow")
+    };
+    
     
     // Generic filter template that works for date filters and project filters
-    createFilterForm = () => {
+    createFilterForm () {
         let filterContainer = document.getElementById("filters");
         let filterFormContainer = document.createElement("form");
         filterFormContainer.action = '';
         filterFormContainer.method = 'get';
-        filterFormContainer.id = "filter-container"
+        filterFormContainer.id = "filter-container";
 
         filterContainer.append(filterFormContainer);
     }
 
-    fixedFilterTemplate(name) {
+    fixedFilterTemplate(name, checked = false) {
         let nameLower = name.toLowerCase();
+        let filterContainer = document.getElementById("filter-container");
         let fixedFilterContainer = document.createElement("div");
         fixedFilterContainer.class = "fixed-filter";
         let filterInput = document.createElement("input");
@@ -164,6 +170,7 @@ class filterManager {
         filterInput.id = nameLower;
         filterInput.value = nameLower;
         filterInput.name = "fixed-label";
+        filterInput.checked = checked;
 
         let filterLabel = document.createElement("label");
         filterLabel.for = nameLower;
@@ -171,9 +178,9 @@ class filterManager {
 
         fixedFilterContainer.append(filterInput);
         fixedFilterContainer.append(filterLabel);
+        filterContainer.append(fixedFilterContainer);
 
     }
-
 
     // Prepopulation for date filters
 }
@@ -467,7 +474,7 @@ storageManagerInstance.appendToStorage(newTask2);
 displayManagerInstance.addTaskButtonListener();
 displayManagerInstance.addDeleteButtonListener();
 
-filterManagerInstance.createFilterForm();
+// filterManagerInstance.createFilterForm();
 
 // display.pushToTaskListContainer();
 
