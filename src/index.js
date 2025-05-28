@@ -143,9 +143,10 @@ class projectManager {
 
 class filterManager {
     constructor() {
-        this.createFilterForm()
+        this.createFilterForm();
         this.fixedFilterTemplate("Today", true);
-        this.fixedFilterTemplate("Tomorrow")
+        this.fixedFilterTemplate("Tomorrow");
+        this.createProjectSection();
     };
     
     
@@ -179,7 +180,19 @@ class filterManager {
         fixedFilterContainer.append(filterInput);
         fixedFilterContainer.append(filterLabel);
         filterContainer.append(fixedFilterContainer);
+    }
 
+    createProjectSection() {
+        let filterFormContainer = document.getElementById("filter-container");
+        let projectSectionHeader = document.createElement("h1");
+        projectSectionHeader.textContent = "Projects";
+
+        filterFormContainer.append(projectSectionHeader);
+
+        let filterContainer = document.getElementById("filters");
+        let addProjectButton = document.createElement("button");
+        addProjectButton.textContent = "Add Project";
+        filterContainer.append(addProjectButton);
     }
 
     // Prepopulation for date filters
