@@ -195,7 +195,7 @@ class filterManager {
         filterContainer.append(addProjectButton);
     }
 
-    // Prepopulation for date filters
+    // Read the projects list from storage
 }
 
 class displayManager {
@@ -423,7 +423,10 @@ class displayManager {
 }
 
 class storageManager {
-    constructor () {};
+    constructor () {
+        this.writeToProjectStorage([]);
+        this.addProject("test");
+    };
 
     readStorageKeys (storage) {
         const storageKeys = Object.keys(storage);
@@ -445,7 +448,9 @@ class storageManager {
         let dict = {};
 
         for (let key of storageKeys) {
-            dict[key] = this.getItemFromStorage(key);
+            if (key != "projects"){
+                dict[key] = this.getItemFromStorage(key);
+            }
         }
 
         return dict;
@@ -460,6 +465,23 @@ class storageManager {
         localStorage.removeItem(key);
         displayManagerInstance.pushToTaskListContainer();
     }
+
+    writeToProjectStorage(obj){
+        localStorage.setItem("projects", JSON.stringify(obj));
+    }
+
+    getProjectsFromStorage() {
+        let projectObj = this.getItemFromStorage("projects");
+        return projectObj;
+    }
+
+    addProject(project) {
+        let projects = this.getProjectsFromStorage();
+        projects.push(project);
+        this.writeToProjectStorage(projects);
+    }
+
+    
 }
 
 localStorage.clear();
