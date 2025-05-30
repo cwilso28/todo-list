@@ -146,7 +146,9 @@ class filterManager {
         this.createFilterForm();
         this.fixedFilterTemplate("Today", true);
         this.fixedFilterTemplate("Tomorrow");
-        this.createProjectSection();
+        this.createProjectSection()
+        // this.projectFilterTemplate("test");
+        this.refreshProjectList();
     };
     
     
@@ -161,25 +163,43 @@ class filterManager {
         filterContainer.append(filterFormContainer);
     }
 
-    fixedFilterTemplate(name, checked = false) {
-        let nameLower = name.toLowerCase();
-        let filterContainer = document.getElementById("filter-container");
-        let fixedFilterContainer = document.createElement("div");
-        fixedFilterContainer.class = "fixed-filter";
-        let filterInput = document.createElement("input");
+    generalFilterTemplate(name, checked = false) {
+        let filterInput = document.createElement("input")
         filterInput.type = "radio";
-        filterInput.id = nameLower;
-        filterInput.value = nameLower;
-        filterInput.name = "fixed-label";
+        filterInput.id = name;
+        filterInput.value = name;
+        filterInput.name = "filter";
         filterInput.checked = checked;
 
         let filterLabel = document.createElement("label");
-        filterLabel.for = nameLower;
+        filterLabel.for = name;
         filterLabel.textContent = name;
+
+        return {filterInput, filterLabel}
+    }
+
+    fixedFilterTemplate(name, checked = false) {
+        let filterContainer = document.getElementById("filter-container");
+        let fixedFilterContainer = document.createElement("div");
+        fixedFilterContainer.class = "fixed-filter";
+        let {filterInput, filterLabel} = this.generalFilterTemplate(name, checked);
 
         fixedFilterContainer.append(filterInput);
         fixedFilterContainer.append(filterLabel);
         filterContainer.append(fixedFilterContainer);
+    }
+
+    projectFilterTemplate(name) {
+        let filterContainer = document.getElementById("filter-container");
+
+        let projectFilterContainer = document.createElement("div");
+        projectFilterContainer.class = "project-filter";
+
+        let {filterInput, filterLabel} = this.generalFilterTemplate(name);
+
+        projectFilterContainer.append(filterInput);
+        projectFilterContainer.append(filterLabel);
+        filterContainer.append(projectFilterContainer);
     }
 
     createProjectSection() {
@@ -193,6 +213,17 @@ class filterManager {
         let addProjectButton = document.createElement("button");
         addProjectButton.textContent = "Add Project";
         filterContainer.append(addProjectButton);
+    }
+
+    refreshProjectList() {
+        let projectsList = storageManagerInstance.getProjectsFromStorage();
+        for (let i=1; i < projectsList.length; i++) {
+            this.projectFilterTemplate(projectsList[i]);
+        }
+    }
+
+    createProjectForm() {
+        
     }
 
     // Read the projects list from storage
@@ -425,7 +456,7 @@ class displayManager {
 class storageManager {
     constructor () {
         this.writeToProjectStorage([]);
-        this.addProject("test");
+        this.addProject("");
     };
 
     readStorageKeys (storage) {
