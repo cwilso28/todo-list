@@ -148,6 +148,7 @@ class filterManager {
         this.fixedFilterTemplate("Tomorrow");
         this.createProjectSection()
         // this.projectFilterTemplate("test");
+        // this.projectFilterTemplate("test2")
         this.refreshProjectList();
     };
     
@@ -277,6 +278,26 @@ class displayManager {
         descFieldContainer.append(descFieldInput);
         formContainer.append(descFieldContainer);
 
+        // Create dropdown for project
+        let projectFieldContainer = document.createElement("div");
+        //label
+        let projectFieldLabel = document.createElement("label");
+        let projectFieldName = "task-project";
+        projectFieldLabel.for = projectFieldName;
+        projectFieldLabel.textContent = "Project:";
+        //input
+        let projectFieldInput = document.createElement("select");
+        projectFieldInput.id = projectFieldName;
+        projectFieldInput.name = projectFieldName;
+        let projectList = storageManagerInstance.getProjectsFromStorage();
+        for (let i = 0;i < projectList.length; i++) {
+            projectFieldInput.append(this.createListOption(projectList[i]));
+        }
+        projectFieldContainer.append(projectFieldLabel);
+        projectFieldContainer.append(projectFieldInput);
+        formContainer.append(projectFieldContainer);
+
+
         // Create dropdown for priority
         let priorityFieldContainer = document.createElement("div");
         //label
@@ -347,6 +368,14 @@ class displayManager {
         return popup;
     }
     
+    createListOption(project) {
+        let option = document.createElement("option");
+        option.value = project;
+        option.textContent = project;
+
+        return option
+    }
+
     greyBackground() {
         let backgroundOverlay = document.createElement("div");
         backgroundOverlay.id = "greyBackgroundOverlay"
@@ -389,10 +418,11 @@ class displayManager {
     popupSubmit() {
         let taskName = document.getElementById("task-name").value;
         let desc = document.getElementById("task-desc").value;
+        let project = document.getElementById("task-project").value;
         let priority = document.getElementById("task-priority").value;
         let dueDate = document.getElementById("task-duedate").value.replace(/-/g,'\/');
         
-        let popupDict = {name: taskName, desc: desc, priority: priority, dueDate: dueDate}
+        let popupDict = {name: taskName, desc: desc, project: project, priority: priority, dueDate: dueDate}
         console.log(popupDict);
         let task = new Task(popupDict);
 
@@ -451,12 +481,16 @@ class displayManager {
             taskListContainer.append(list[i].asHTML());
         }
     }
+
+
 }
 
 class storageManager {
     constructor () {
         this.writeToProjectStorage([]);
-        this.addProject("");
+        this.addProject("Inbox");
+        this.addProject("test1");
+        this.addProject("test2");
     };
 
     readStorageKeys (storage) {
