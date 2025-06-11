@@ -368,6 +368,39 @@ class displayManager {
         return popup;
     }
     
+    createProjectForm() {
+        let projectPopupContainer = document.createElement("div");
+        projectPopupContainer.id = "project-popup-container";
+        
+        let projectForm = document.createElement("form");
+        projectForm.id = "project-form"
+        projectForm.action = "";
+        projectForm.method = "get";
+        projectPopupContainer.append(projectForm);
+
+        // Create input field container
+        let inputFieldContainer = document.createElement("div");
+        projectForm.append(inputFieldContainer);
+        
+        // Create label
+        let projectLabel = document.createElement("label");
+        let projectName = "project-name";
+        projectLabel.for = projectName;
+        projectLabel.textContent = "Project Name: ";
+        inputFieldContainer.append(projectLabel);
+
+        // Create input
+        let projectInput = document.createElement("input");
+        projectInput.id = projectName;
+        projectInput.name = projectName;
+        projectInput.required = true;
+        inputFieldContainer.append(projectInput);
+
+        // Create submit button
+        // Create cancel button
+
+    }
+    
     createListOption(project) {
         let option = document.createElement("option");
         option.value = project;
