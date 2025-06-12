@@ -347,25 +347,37 @@ class displayManager {
         formContainer.append(dueDateContainer);
 
         // Create submit button
+        let submitButton = this.createSubmitButton();
+
+        formContainer.append(submitButton);
+
+        // Create cancel button
+        let cancelButton = this.createCancelButton();
+
+        formContainer.append(cancelButton);
+        popup.style.display = "none";
+
+        return popup;
+    }
+
+    createSubmitButton() {
         let submitButton = document.createElement("button");
         submitButton.id = "submit-button";
         submitButton.class = "popup-button";
         submitButton.type = "submit";
         submitButton.textContent = "Submit";
+        
+        return submitButton;
+    }
 
-        formContainer.append(submitButton);
-
-        // Create cancel button
+    createCancelButton() {
         let cancelButton = document.createElement("button");
         cancelButton.id = "cancel-button";
         cancelButton.class = "popup-button";
         cancelButton.type = "button";
         cancelButton.textContent = "Cancel";
 
-        formContainer.append(cancelButton);
-        popup.style.display = "none";
-
-        return popup;
+        return cancelButton;
     }
     
     createProjectForm() {
@@ -397,7 +409,15 @@ class displayManager {
         inputFieldContainer.append(projectInput);
 
         // Create submit button
+        let submitButton = this.createSubmitButton();
+
+        projectPopupContainer.append(submitButton);
+
         // Create cancel button
+        let cancelButton = this.createCancelButton();
+
+        projectPopupContainer.append(cancelButton);
+        projectPopupContainer.display = "None";
 
     }
     
