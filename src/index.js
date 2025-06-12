@@ -213,6 +213,9 @@ class filterManager {
         let filterContainer = document.getElementById("filters");
         let addProjectButton = document.createElement("button");
         addProjectButton.textContent = "Add Project";
+        addProjectButton.type = "submit";
+        addProjectButton.id = "new-project-button";
+        addProjectButton.style = "display: block";
         filterContainer.append(addProjectButton);
     }
 
@@ -221,10 +224,6 @@ class filterManager {
         for (let i=1; i < projectsList.length; i++) {
             this.projectFilterTemplate(projectsList[i]);
         }
-    }
-
-    createProjectForm() {
-        
     }
 
     // Read the projects list from storage
@@ -417,7 +416,9 @@ class displayManager {
         let cancelButton = this.createCancelButton();
 
         projectPopupContainer.append(cancelButton);
-        projectPopupContainer.display = "None";
+        projectPopupContainer.style.display = "none";
+
+        return projectPopupContainer;
 
     }
     
@@ -468,6 +469,21 @@ class displayManager {
         this.addCancelButtonListener();
     }
 
+    showProjectPopup() {
+        let bodyContainer = document.querySelector("body");
+        let backgroundOverlay = this.greyBackground();
+        backgroundOverlay.style.display = "block";
+
+        let form = this.createProjectForm();
+        form.style.display = "block";
+
+        bodyContainer.append(backgroundOverlay);
+        bodyContainer.append(form);
+
+        // this.addSubmitButtonListener();
+        // this.addCancelButtonListener();
+    }
+
     popupSubmit() {
         let taskName = document.getElementById("task-name").value;
         let desc = document.getElementById("task-desc").value;
@@ -481,6 +497,15 @@ class displayManager {
 
         storageManagerInstance.appendToStorage(task);
         // Tell the task list manager to read from storage
+    }
+
+    addProjectButtonListener() {
+        let addProjectButtonContainer = document.getElementById("new-project-button");
+
+        addProjectButtonContainer.addEventListener("click", (e) => {
+            this.showProjectPopup();
+            this.hideByElementID("new-project-button");
+        })
     }
 
     addTaskButtonListener() {
@@ -626,6 +651,7 @@ storageManagerInstance.appendToStorage(newTask2);
 
 displayManagerInstance.addTaskButtonListener();
 displayManagerInstance.addDeleteButtonListener();
+displayManagerInstance.addProjectButtonListener();
 
 // filterManagerInstance.createFilterForm();
 
