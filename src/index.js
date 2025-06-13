@@ -410,12 +410,12 @@ class displayManager {
         // Create submit button
         let submitButton = this.createSubmitButton();
 
-        projectPopupContainer.append(submitButton);
+        projectForm.append(submitButton);
 
         // Create cancel button
         let cancelButton = this.createCancelButton();
 
-        projectPopupContainer.append(cancelButton);
+        projectForm.append(cancelButton);
         projectPopupContainer.style.display = "none";
 
         return projectPopupContainer;
@@ -480,8 +480,8 @@ class displayManager {
         bodyContainer.append(backgroundOverlay);
         bodyContainer.append(form);
 
-        // this.addSubmitButtonListener();
-        // this.addCancelButtonListener();
+        this.addSubmitProjectButtonListener();
+        this.addCancelProjectButtonListener();
     }
 
     popupSubmit() {
@@ -497,6 +497,11 @@ class displayManager {
 
         storageManagerInstance.appendToStorage(task);
         // Tell the task list manager to read from storage
+    }
+
+    projectPopupSubmit() {
+        let projectName = document.getElementById("project-name").value;
+        storageManagerInstance.addProject(projectName);
     }
 
     addProjectButtonListener() {
@@ -528,6 +533,16 @@ class displayManager {
         })
     }
 
+    addCancelProjectButtonListener() {
+        let cancelProjectButtonContainer = document.getElementById("cancel-button");
+
+        cancelProjectButtonContainer.addEventListener("click", (e) => {
+            this.removeByElementID("project-popup-container");
+            this.removeByElementID("greyBackgroundOverlay");
+            this.showByElementID("new-project-button");
+        })
+    }
+
     addSubmitButtonListener() {
         let popupContainer = document.getElementById("popup-container");
 
@@ -537,6 +552,19 @@ class displayManager {
             this.removeByElementID("popup-container");
             this.removeByElementID("greyBackgroundOverlay");
             this.showByElementID("new-task-button");
+        })
+    }
+
+    addSubmitProjectButtonListener() {
+        let projectPopupContainer = document.getElementById("project-popup-container");
+
+        projectPopupContainer.addEventListener("submit", (e) => {
+            e.preventDefault();
+            this.projectPopupSubmit();
+            this.removeByElementID("project-popup-container");
+            this.removeByElementID("greyBackgroundOverlay");
+            this.showByElementID("new-project-button");
+            filterManagerInstance.refreshProjectList();
         })
     }
 
@@ -622,6 +650,7 @@ class storageManager {
         let projects = this.getProjectsFromStorage();
         projects.push(project);
         this.writeToProjectStorage(projects);
+
     }
 
     
@@ -634,6 +663,7 @@ let storageManagerInstance = new storageManager;
 let taskManagerInstance = new taskManager;
 let taskListManagerInstance = new taskListManager;
 let filterManagerInstance = new filterManager;
+
 
 // newTask = new Task({ name: "Make bed", dueDate: new Date(2025, 2, 15) });
 let newTask = new Task({ name: "Make bed", dueDate: new Date("Mar 15,2025") });
