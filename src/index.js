@@ -210,7 +210,16 @@ class filterManager {
 
         projectFilterContainer.append(filterInput);
         projectFilterContainer.append(filterLabel);
+
+        let projectDeleteButton = document.createElement("button");
+        projectDeleteButton.type = "button";
+        projectDeleteButton.class = "project-delete-button";
+        projectDeleteButton.textContent = "delete";
+        projectFilterContainer.append(projectDeleteButton);
+
         projectFilterSectionContainer.append(projectFilterContainer);
+
+
         filterContainer.append(projectFilterSectionContainer);
     }
 
