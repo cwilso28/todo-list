@@ -205,6 +205,7 @@ class filterManager {
         let filterContainer = document.getElementById("filter-container");
         let projectFilterSectionContainer = document.getElementById("project-filter");
         let projectFilterContainer = document.createElement("div");
+        projectFilterContainer.id = name;
 
         let {filterInput, filterLabel} = this.generalFilterTemplate(name);
 
@@ -213,7 +214,7 @@ class filterManager {
 
         let projectDeleteButton = document.createElement("button");
         projectDeleteButton.type = "button";
-        projectDeleteButton.class = "project-delete-button";
+        projectDeleteButton.className = "project-delete-button";
         projectDeleteButton.textContent = "delete";
         projectFilterContainer.append(projectDeleteButton);
 
@@ -609,6 +610,17 @@ class displayManager {
         })
     }
 
+    addDeleteProjectButtonListener() {
+        let projectListContainer = document.getElementById("project-filter");
+
+        projectListContainer.addEventListener("click", (e) => {
+            if (e.target && e.target.matches(".project-delete-button")) {
+                storageManagerInstance.deleteProject(e.target.parentNode.id);
+                filterManagerInstance.refreshProjectList();
+            }
+        })
+    }
+
     pushToTaskListContainer () {
         let taskListContainer = document.getElementById("tasks");
         taskListContainer.textContent = '';
@@ -683,9 +695,16 @@ class storageManager {
             projects.push(project);
             this.writeToProjectStorage(projects);
         }
-
     }
 
+    deleteProject(project) {
+        let projects = this.getProjectsFromStorage();
+        if (projects.includes(project)) {
+            let index = projects.indexOf(project);
+            projects.splice(index, 1);
+            this.writeToProjectStorage(projects);
+        }
+    }
     
 }
 
@@ -715,6 +734,7 @@ storageManagerInstance.appendToStorage(newTask2);
 displayManagerInstance.addTaskButtonListener();
 displayManagerInstance.addDeleteButtonListener();
 displayManagerInstance.addProjectButtonListener();
+displayManagerInstance.addDeleteProjectButtonListener();
 
 // filterManagerInstance.createFilterForm();
 
