@@ -679,8 +679,10 @@ class storageManager {
 
     addProject(project) {
         let projects = this.getProjectsFromStorage();
-        projects.push(project);
-        this.writeToProjectStorage(projects);
+        if (!projects.includes(project)) {
+            projects.push(project);
+            this.writeToProjectStorage(projects);
+        }
 
     }
 
