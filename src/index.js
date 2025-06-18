@@ -258,6 +258,14 @@ class filterManager {
         }
     }
 
+    getFilter() {
+        pass
+    }
+
+    filterHTMLList(list, filter, filterType) {
+        pass
+    }
+
     // Read the projects list from storage
 }
 
