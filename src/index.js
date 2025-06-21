@@ -168,10 +168,11 @@ class filterManager {
         filterContainer.append(filterFormContainer);
     }
 
-    generalFilterTemplate(name, checked = false) {
+    generalFilterTemplate(name, filterType, checked = false) {
         let filterInput = document.createElement("input")
         filterInput.type = "radio";
         filterInput.id = name;
+        filterInput.className = filterType;
         filterInput.value = name;
         filterInput.name = "filter";
         filterInput.checked = checked;
@@ -183,11 +184,11 @@ class filterManager {
         return {filterInput, filterLabel}
     }
 
-    fixedFilterTemplate(name, checked = false) {
+    fixedFilterTemplate(name, filterType, checked = false) {
         let filterContainer = document.getElementById("filter-container");
         let fixedFilterSectionContainer = document.getElementById("fixed-filter");
         let fixedFilterContainer = document.createElement("div");
-        let {filterInput, filterLabel} = this.generalFilterTemplate(name, checked);
+        let {filterInput, filterLabel} = this.generalFilterTemplate(name, filterType, checked);
 
         fixedFilterContainer.append(filterInput);
         fixedFilterContainer.append(filterLabel);
@@ -200,8 +201,9 @@ class filterManager {
         let projectFilterSectionContainer = document.getElementById("project-filter");
         let projectFilterContainer = document.createElement("div");
         projectFilterContainer.id = name;
+        let filterType = "project";
 
-        let {filterInput, filterLabel} = this.generalFilterTemplate(name);
+        let {filterInput, filterLabel} = this.generalFilterTemplate(name, filterType, false);
 
         projectFilterContainer.append(filterInput);
         projectFilterContainer.append(filterLabel);
@@ -254,15 +256,16 @@ class filterManager {
 
     initializeProjectList(){
         this.createFilterForm();
-        this.fixedFilterTemplate("Inbox", true);
-        this.fixedFilterTemplate("Today");
-        this.fixedFilterTemplate("Tomorrow");
+        this.fixedFilterTemplate("Inbox","project", true);
+        this.fixedFilterTemplate("Today", "date");
+        this.fixedFilterTemplate("Tomorrow", "date");
         this.createProjectSection();
         this.refreshProjectList();
     }
 
-    getFilter() {
-        pass
+    readFilterList() {
+        let formContainer = document.getElementById("filter-container");
+
     }
 
     filterHTMLList(list, filter, filterType) {
@@ -632,6 +635,16 @@ class displayManager {
         })
     }
 
+    addFilterListener(){
+        let filterContainer = document.getElementById("filter-container");
+
+        filterContainer.addEventListener("click", (e) => {
+            if (e.target && e.target.matches("input[type='radio']")) {
+                console.log(e.target.value)
+            }
+        })
+    }
+
     pushToTaskListContainer () {
         let taskListContainer = document.getElementById("tasks");
         taskListContainer.textContent = '';
@@ -746,6 +759,7 @@ displayManagerInstance.addTaskButtonListener();
 displayManagerInstance.addDeleteButtonListener();
 displayManagerInstance.addProjectButtonListener();
 displayManagerInstance.addDeleteProjectButtonListener();
+displayManagerInstance.addFilterListener();
 
 // filterManagerInstance.createFilterForm();
 
