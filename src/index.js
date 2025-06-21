@@ -143,13 +143,7 @@ class projectManager {
 
 class filterManager {
     constructor() {
-        this.createFilterForm();
-        this.fixedFilterTemplate("Today", true);
-        this.fixedFilterTemplate("Tomorrow");
-        this.createProjectSection()
-        // this.projectFilterTemplate("test");
-        // this.projectFilterTemplate("test2")
-        this.refreshProjectList();
+        this.initializeProjectList();
     };
     
     
@@ -256,6 +250,15 @@ class filterManager {
         for (let i=1; i < projectsList.length; i++) {
             this.projectFilterTemplate(projectsList[i]);
         }
+    }
+
+    initializeProjectList(){
+        this.createFilterForm();
+        this.fixedFilterTemplate("Inbox", true);
+        this.fixedFilterTemplate("Today");
+        this.fixedFilterTemplate("Tomorrow");
+        this.createProjectSection();
+        this.refreshProjectList();
     }
 
     getFilter() {
