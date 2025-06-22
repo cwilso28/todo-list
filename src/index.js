@@ -143,7 +143,7 @@ class projectManager {
 
 class filterManager {
     constructor() {
-        this.initializeProjectList();
+        // this.initializeProjectList();
     };
     
     
@@ -655,15 +655,13 @@ class displayManager {
         }
     }
 
-
 }
 
 class storageManager {
     constructor () {
-        this.writeToProjectStorage([]);
-        this.addProject("Inbox");
-        this.addProject("test1");
-        this.addProject("test2");
+        this.initializeProjectStorage();
+        // this.addProject("test1");
+        // this.addProject("test2");
     };
 
     readStorageKeys (storage) {
@@ -730,36 +728,84 @@ class storageManager {
         }
     }
     
+    initializeProjectStorage() {
+        if (!localStorage.getItem("projects")) {
+            this.writeToProjectStorage([]);
+            this.addProject("Inbox");
+        }
+    }
 }
 
-localStorage.clear();
+class todoListInitializer {
+    constructor() {
+        this.initialize();
+    };
+
+    // displayManagerInstance = new displayManager;
+    // storageManagerInstance = new storageManager;
+    // taskManagerInstance = new taskManager;
+    // taskListManagerInstance = new taskListManager;
+    // filterManagerInstance = new filterManager;
+
+    initialize() {
+        // let displayManagerInstance = new displayManager;
+        // let storageManagerInstance = new storageManager;
+        // let taskManagerInstance = new taskManager;
+        // let taskListManagerInstance = new taskListManager;
+        // let filterManagerInstance = new filterManager;
+
+        displayManagerInstance.addTaskButtonListener();
+        displayManagerInstance.addDeleteButtonListener();
+        filterManagerInstance.initializeProjectList();
+        displayManagerInstance.addProjectButtonListener();
+        displayManagerInstance.addDeleteProjectButtonListener();
+        displayManagerInstance.addFilterListener();
+        
+
+        // return {displayManagerInstance,
+        //         storageManagerInstance,
+        //         taskManagerInstance,
+        //         taskListManagerInstance,
+        //         filterManagerInstance
+        // }
+    }
+}
+
+// let [displayManagerInstance,
+//      storageManagerInstance,
+//      taskManagerInstance,
+//      taskListManagerInstance,
+//      filterManagerInstance] = new todoListInitializer()
+
+// localStorage.clear();
 
 let displayManagerInstance = new displayManager;
 let storageManagerInstance = new storageManager;
 let taskManagerInstance = new taskManager;
 let taskListManagerInstance = new taskListManager;
 let filterManagerInstance = new filterManager;
+new todoListInitializer();
 
 
-// newTask = new Task({ name: "Make bed", dueDate: new Date(2025, 2, 15) });
-let newTask = new Task({ name: "Make bed", dueDate: new Date("Mar 15,2025") });
-// let storageManagerInstance = new storageManager;
-storageManagerInstance.appendToStorage(newTask);
+// // newTask = new Task({ name: "Make bed", dueDate: new Date(2025, 2, 15) });
+// let newTask = new Task({ name: "Make bed", dueDate: new Date("Mar 15,2025") });
+// // let storageManagerInstance = new storageManager;
+// storageManagerInstance.appendToStorage(newTask);
 
-console.log(displayManagerInstance);
-console.log(storageManagerInstance);
-console.log(taskManagerInstance);
-console.log(taskListManagerInstance);
+// console.log(displayManagerInstance);
+// console.log(storageManagerInstance);
+// console.log(taskManagerInstance);
+// console.log(taskListManagerInstance);
 // console.log(storage.getItemFromStorage(newTask.id))
-let repeatTask = storageManagerInstance.getItemFromStorage(newTask.id);
-let newTask2 = new Task(repeatTask);
-storageManagerInstance.appendToStorage(newTask2);
+// let repeatTask = storageManagerInstance.getItemFromStorage(newTask.id);
+// let newTask2 = new Task(repeatTask);
+// storageManagerInstance.appendToStorage(newTask2);
 
-displayManagerInstance.addTaskButtonListener();
-displayManagerInstance.addDeleteButtonListener();
-displayManagerInstance.addProjectButtonListener();
-displayManagerInstance.addDeleteProjectButtonListener();
-displayManagerInstance.addFilterListener();
+// displayManagerInstance.addTaskButtonListener();
+// displayManagerInstance.addDeleteButtonListener();
+// displayManagerInstance.addProjectButtonListener();
+// displayManagerInstance.addDeleteProjectButtonListener();
+// displayManagerInstance.addFilterListener();
 
 // filterManagerInstance.createFilterForm();
 
