@@ -263,13 +263,24 @@ class filterManager {
         this.refreshProjectList();
     }
 
-    readFilterList() {
-        let formContainer = document.getElementById("filter-container");
+    // readFilterList() {
+    //     let formContainer = document.getElementById("filter-container");
 
-    }
+    // }
 
-    filterHTMLList(list, filter, filterType) {
-        pass
+    filterTaskList(filter, filterType) {
+        taskListManagerInstance.loadFromStorage();
+        let list = taskListManagerInstance.taskList;
+        if (filterType === "project") {
+            let filteredList = list.filter((task) => task.project === filter);
+            console.log(filteredList);
+        }
+
+
+        else if (filterType === "date") {
+            console.log("Date filter!")
+        }
+        
     }
 
     // Read the projects list from storage
@@ -641,7 +652,10 @@ class displayManager {
 
         filterContainer.addEventListener("click", (e) => {
             if (e.target && e.target.matches("input[type='radio']")) {
-                console.log(e.target.value)
+                let filterName = e.target.value;
+                let filterType = e.target.className;
+                // console.log(filterName, filterType)
+                filterManagerInstance.filterTaskList(filterName, filterType);
             }
         })
     }
