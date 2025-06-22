@@ -18,7 +18,8 @@ class Task {
     };
 
     formatDateForDisplay () {
-        if (this.dueDate === this.createDate) {
+        // if (this.dueDate === this.createDate) {
+        if (this.dueDate === formatDate(new Date())) {
             return "Today";
         }
         else {
@@ -78,6 +79,12 @@ function newDateWithoutTime () {
 
 function formatFormDate(date) {
     return format(date, "yyyy-MM-dd");
+}
+
+function getTomorrowDate() {
+    let today = new Date();
+    let tomorrow = today.setDate(today.getDate() + 1);
+    return tomorrow;
 }
 
 class User {
@@ -256,34 +263,50 @@ class filterManager {
 
     initializeProjectList(){
         this.createFilterForm();
-        this.fixedFilterTemplate("Inbox","project", true);
+        this.fixedFilterTemplate("All","none",true)
+        this.fixedFilterTemplate("Inbox","project");
         this.fixedFilterTemplate("Today", "date");
         this.fixedFilterTemplate("Tomorrow", "date");
         this.createProjectSection();
         this.refreshProjectList();
     }
 
-    // readFilterList() {
-    //     let formContainer = document.getElementById("filter-container");
-
-    // }
+    readFilterList() {
+        let formContainer = document.getElementById("filter-container");
+        let checkedFilter = formContainer.querySelector('input[name="filter"]:checked');
+        return checkedFilter
+    }
 
     filterTaskList(filter, filterType) {
         taskListManagerInstance.loadFromStorage();
         let list = taskListManagerInstance.taskList;
+        let filteredList = "";
+
         if (filterType === "project") {
-            let filteredList = list.filter((task) => task.project === filter);
-            console.log(filteredList);
+            filteredList = list.filter((task) => task.project === filter);
         }
-
-
         else if (filterType === "date") {
-            console.log("Date filter!")
+            if (filter === "Today") {
+                let filterDate = formatDate(new Date())
+                filteredList = list.filter((task) => task.dueDate === filterDate);
+            }
+
+            else if (filter === "Tomorrow") {
+                let filterDate = formatDate(getTomorrowDate());
+                // let filterDate = formatDate(new Date()+1)
+                filteredList = list.filter((task) => task.dueDate === filterDate);
+            }
+
+            // let filteredList = list.filter((task) => task.dueDate === filterDate);
         }
-        
+
+        else {
+            filteredList = list;
+        }
+
+        return filteredList;        
     }
 
-    // Read the projects list from storage
 }
 
 class displayManager {
@@ -652,10 +675,13 @@ class displayManager {
 
         filterContainer.addEventListener("click", (e) => {
             if (e.target && e.target.matches("input[type='radio']")) {
-                let filterName = e.target.value;
-                let filterType = e.target.className;
-                // console.log(filterName, filterType)
-                filterManagerInstance.filterTaskList(filterName, filterType);
+                // let filterName = e.target.value;
+                // let filterType = e.target.className;
+                // // console.log(filterName, filterType)
+                // // filterManagerInstance.filterTaskList(filterName, filterType);
+                // filterManagerInstance.readFilterList();
+
+                this.pushToTaskListContainer();
             }
         })
     }
@@ -663,8 +689,12 @@ class displayManager {
     pushToTaskListContainer () {
         let taskListContainer = document.getElementById("tasks");
         taskListContainer.textContent = '';
-        taskListManagerInstance.loadFromStorage();
-        let list = taskListManagerInstance.taskList;
+        // taskListManagerInstance.loadFromStorage();
+        // let list = taskListManagerInstance.taskList;
+        let checkedFilter = filterManagerInstance.readFilterList();
+        let filterName = checkedFilter.value;
+        let filterType = checkedFilter.className;
+        let list = filterManagerInstance.filterTaskList(filterName, filterType);
         for (let i = 0; i < list.length; i++) {
             taskListContainer.append(list[i].asHTML());
         }
