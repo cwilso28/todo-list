@@ -276,7 +276,8 @@ class filterManager {
 }
 
 class displayManager {
-    constructor () {};
+    constructor () {
+    };
 
     // storageInstance = new storageManager;
 
@@ -655,6 +656,12 @@ class displayManager {
         }
     }
 
+    checkForTasks() {
+        if (Object.keys(storageManagerInstance.getAllFromStorage()).length > 0) {
+            this.pushToTaskListContainer();
+        }
+    }
+
 }
 
 class storageManager {
@@ -760,6 +767,7 @@ class todoListInitializer {
         displayManagerInstance.addProjectButtonListener();
         displayManagerInstance.addDeleteProjectButtonListener();
         displayManagerInstance.addFilterListener();
+        displayManagerInstance.checkForTasks();
         
 
         // return {displayManagerInstance,
