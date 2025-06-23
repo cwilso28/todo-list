@@ -46,6 +46,10 @@ class Task {
         let dueDatePara = document.createElement("p");
         dueDatePara.textContent = this.formatDateForDisplay();
 
+        let editButton = document.createElement("button");
+        editButton.textContent = "Edit";
+        editButton.class = "task-edit-button";
+
         let deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
         deleteButton.id = "task-delete-button";
@@ -55,6 +59,7 @@ class Task {
         taskContainer.append(projectPara);
         taskContainer.append(priorityPara);
         taskContainer.append(dueDatePara);
+        taskContainer.append(editButton);
         taskContainer.append(deleteButton);
 
         return taskContainer;
@@ -664,7 +669,9 @@ class displayManager {
 
         projectListContainer.addEventListener("click", (e) => {
             if (e.target && e.target.matches(".project-delete-button")) {
-                storageManagerInstance.deleteProject(e.target.parentNode.id);
+                let projectID = e.target.parentNode.id;
+                storageManagerInstance.deleteProject(projectID);
+                storageManagerInstance.deleteTasksAssociatedWithProject(projectID);
                 filterManagerInstance.refreshProjectList();
             }
         })
@@ -778,6 +785,15 @@ class storageManager {
             this.writeToProjectStorage(projects);
         }
     }
+
+    deleteTasksAssociatedWithProject(project) {
+        let storedTasks = this.getAllFromStorage();
+        for (let [key, value] of Object.entries(storedTasks)) {
+            if (value.project === project) {
+                this.deleteFromStorage(key);
+            }
+        };
+    }
     
     initializeProjectStorage() {
         if (!localStorage.getItem("projects")) {
@@ -837,7 +853,6 @@ let taskManagerInstance = new taskManager;
 let taskListManagerInstance = new taskListManager;
 let filterManagerInstance = new filterManager;
 new todoListInitializer();
-
 
 // // newTask = new Task({ name: "Make bed", dueDate: new Date(2025, 2, 15) });
 // let newTask = new Task({ name: "Make bed", dueDate: new Date("Mar 15,2025") });
