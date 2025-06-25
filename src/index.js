@@ -585,6 +585,17 @@ class displayManager {
         // Tell the task list manager to read from storage
     }
 
+    fillTaskPopup(taskID) {
+        let task = storageManagerInstance.getItemFromStorage(taskID);
+        document.getElementById("task-name").defaultValue = task.name;
+        document.getElementById("task-desc").defaultValue = "";
+        document.getElementById("task-project").defaultValue = "";
+        document.getElementById("task-priority").defaultValue = "";
+        document.getElementById("task-duedate").defaultValue = "";
+        let createDate = taskID.createDate;
+        let id = taskID.id;
+    }
+
     projectPopupSubmit() {
         let projectName = document.getElementById("project-name").value;
         storageManagerInstance.addProject(projectName);
