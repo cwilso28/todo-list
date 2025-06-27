@@ -553,6 +553,8 @@ class displayManager {
 
         if (edit) {
             // Add special submit and cancel button actions
+            this.addSubmitButtonListener(true);
+            this.addCancelButtonListener(true);
         }
         else {
             this.addSubmitButtonListener();
@@ -582,12 +584,13 @@ class displayManager {
         let project = document.getElementById("task-project").value;
         let priority = document.getElementById("task-priority").value;
         let dueDate = document.getElementById("task-duedate").value.replace(/-/g,'\/');
+        let popupDict = '';
         
         if (edit) {
-            let popupDict = {name: taskName, desc: desc, project: project, priority: priority, dueDate: dueDate, createDate: createDate, id: id}
+            popupDict = {name: taskName, desc: desc, project: project, priority: priority, dueDate: dueDate, createDate: createDate, id: id}
         }
         else {
-            let popupDict = {name: taskName, desc: desc, project: project, priority: priority, dueDate: dueDate}
+            popupDict = {name: taskName, desc: desc, project: project, priority: priority, dueDate: dueDate}
         }
 
         // console.log(popupDict);
@@ -603,10 +606,6 @@ class displayManager {
         document.getElementById("task-project").value = task.project;
         document.getElementById("task-priority").value = task.priority;
         document.getElementById("task-duedate").value = formatFormDate(new Date(task.dueDate));
-    }
-
-    editTask() {
-
     }
 
     projectPopupSubmit() {
@@ -633,10 +632,14 @@ class displayManager {
         );
     };
 
-    addCancelButtonListener() {
+    addCancelButtonListener(edit = false) {
         let cancelButtonContainer = document.getElementById("cancel-button");
 
         cancelButtonContainer.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (edit) {
+                this.popupSubmit(true);
+            }
             this.removeByElementID("popup-container");
             this.removeByElementID("greyBackgroundOverlay");
             this.showByElementID("new-task-button");
@@ -653,12 +656,17 @@ class displayManager {
         })
     }
 
-    addSubmitButtonListener() {
+    addSubmitButtonListener(edit = false) {
         let popupContainer = document.getElementById("popup-container");
 
         popupContainer.addEventListener("submit", (e) => {
             e.preventDefault();
-            this.popupSubmit();
+            if (edit) {
+                this.popupSubmit(true);
+            }
+            else {
+                this.popupSubmit();
+            }
             this.removeByElementID("popup-container");
             this.removeByElementID("greyBackgroundOverlay");
             this.showByElementID("new-task-button");
@@ -694,6 +702,7 @@ class displayManager {
             if (e.target && e.target.matches(".task-edit-button")) {
                 let taskID = e.target.parentNode.id;
                 let task = storageManagerInstance.getItemFromStorage(taskID);
+                storageManagerInstance.deleteFromStorage(taskID);
                 displayManagerInstance.showPopup();
                 displayManagerInstance.fillTaskPopup(task);
             }
