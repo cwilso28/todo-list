@@ -48,7 +48,7 @@ class Task {
 
         let editButton = document.createElement("button");
         editButton.textContent = "Edit";
-        editButton.class = "task-edit-button";
+        editButton.className = "task-edit-button";
 
         let deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
@@ -540,7 +540,7 @@ class displayManager {
         elementContainer.style.display = "block";
     }
 
-    showPopup() {
+    showPopup(edit = false) {
         let bodyContainer = document.querySelector("body");
         let backgroundOverlay = this.greyBackground();
         backgroundOverlay.style.display = "block";
@@ -551,8 +551,14 @@ class displayManager {
         bodyContainer.append(backgroundOverlay);
         bodyContainer.append(form);
 
-        this.addSubmitButtonListener();
-        this.addCancelButtonListener();
+        if (edit) {
+            // Add special submit and cancel button actions
+        }
+        else {
+            this.addSubmitButtonListener();
+            this.addCancelButtonListener();
+        }
+        
     }
 
     showProjectPopup() {
@@ -570,30 +576,37 @@ class displayManager {
         this.addCancelProjectButtonListener();
     }
 
-    popupSubmit() {
+    popupSubmit(edit = false) {
         let taskName = document.getElementById("task-name").value;
         let desc = document.getElementById("task-desc").value;
         let project = document.getElementById("task-project").value;
         let priority = document.getElementById("task-priority").value;
         let dueDate = document.getElementById("task-duedate").value.replace(/-/g,'\/');
         
-        let popupDict = {name: taskName, desc: desc, project: project, priority: priority, dueDate: dueDate}
-        console.log(popupDict);
+        if (edit) {
+            let popupDict = {name: taskName, desc: desc, project: project, priority: priority, dueDate: dueDate, createDate: createDate, id: id}
+        }
+        else {
+            let popupDict = {name: taskName, desc: desc, project: project, priority: priority, dueDate: dueDate}
+        }
+
+        // console.log(popupDict);
         let task = new Task(popupDict);
 
         storageManagerInstance.appendToStorage(task);
         // Tell the task list manager to read from storage
     }
 
-    fillTaskPopup(taskID) {
-        let task = storageManagerInstance.getItemFromStorage(taskID);
+    fillTaskPopup(task) {
         document.getElementById("task-name").defaultValue = task.name;
-        document.getElementById("task-desc").defaultValue = "";
-        document.getElementById("task-project").defaultValue = "";
-        document.getElementById("task-priority").defaultValue = "";
-        document.getElementById("task-duedate").defaultValue = "";
-        let createDate = taskID.createDate;
-        let id = taskID.id;
+        document.getElementById("task-desc").defaultValue = task.desc;
+        document.getElementById("task-project").value = task.project;
+        document.getElementById("task-priority").value = task.priority;
+        document.getElementById("task-duedate").value = formatFormDate(new Date(task.dueDate));
+    }
+
+    editTask() {
+
     }
 
     projectPopupSubmit() {
@@ -671,6 +684,18 @@ class displayManager {
         taskListContainer.addEventListener("click", (e) => {
             if (e.target && e.target.matches("#task-delete-button")) {
                 storageManagerInstance.deleteFromStorage(e.target.parentNode.id);
+            }
+        })
+    }
+
+    addEditButtonListener() {
+        let taskListContainer = document.getElementById("tasks");
+        taskListContainer.addEventListener("click", (e) => {
+            if (e.target && e.target.matches(".task-edit-button")) {
+                let taskID = e.target.parentNode.id;
+                let task = storageManagerInstance.getItemFromStorage(taskID);
+                displayManagerInstance.showPopup();
+                displayManagerInstance.fillTaskPopup(task);
             }
         })
     }
@@ -834,6 +859,7 @@ class todoListInitializer {
 
         displayManagerInstance.addTaskButtonListener();
         displayManagerInstance.addDeleteButtonListener();
+        displayManagerInstance.addEditButtonListener();
         filterManagerInstance.initializeProjectList();
         displayManagerInstance.addProjectButtonListener();
         displayManagerInstance.addDeleteProjectButtonListener();
