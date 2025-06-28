@@ -320,6 +320,9 @@ class displayManager {
 
     // storageInstance = new storageManager;
 
+    editedTaskID = ""
+    editedTaskCreateDate = ""
+
     createForm () {
         let popup = document.createElement("div");
         popup.id = "popup-container";
@@ -584,6 +587,8 @@ class displayManager {
         let project = document.getElementById("task-project").value;
         let priority = document.getElementById("task-priority").value;
         let dueDate = document.getElementById("task-duedate").value.replace(/-/g,'\/');
+        let createDate = this.editedTaskCreateDate;
+        let id = this.editedTaskID;
         let popupDict = '';
         
         if (edit) {
@@ -702,8 +707,9 @@ class displayManager {
             if (e.target && e.target.matches(".task-edit-button")) {
                 let taskID = e.target.parentNode.id;
                 let task = storageManagerInstance.getItemFromStorage(taskID);
+                this.storeExtraTaskData(task.id, task.createDate);
                 storageManagerInstance.deleteFromStorage(taskID);
-                displayManagerInstance.showPopup();
+                displayManagerInstance.showPopup(true);
                 displayManagerInstance.fillTaskPopup(task);
             }
         })
@@ -756,6 +762,11 @@ class displayManager {
         if (Object.keys(storageManagerInstance.getAllFromStorage()).length > 0) {
             this.pushToTaskListContainer();
         }
+    }
+
+    storeExtraTaskData(id, createDate) {
+        this.editedTaskID = id;
+        this.editedTaskCreateDate = createDate;
     }
 
 }
