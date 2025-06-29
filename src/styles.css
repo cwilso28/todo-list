@@ -6,6 +6,7 @@ body {
 
 * {
   border: solid 1px black;
+  margin: 0px;
 }
 
 header {
@@ -20,4 +21,37 @@ header {
 #tasks {
   grid-column: 2/3;
   grid-row: 2;
+}
+
+.task{
+  display: flex;
+}
+
+.task-info {
+  display: grid;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+  grid-template-rows: repeat(3, 30px);
+  flex-grow: 1;
+}
+
+.task-name {
+  grid-column: 1/4;
+  grid-row:1/2;
+}
+
+
+.task-desc {
+  font-size: .8em;
+  grid-row: 2/3;
+  grid-column: 1/4;
+}
+
+.task-project,
+.task-priority,
+.task-duedate {
+  grid-row: 3/4;
+}
+
+.task-buttons {
+  align-content: center;
 }
