@@ -30,7 +30,10 @@ class Task {
 
     asHTML () {
         let taskContainer = document.createElement("div");
+        let taskInfoContainer = document.createElement("div");
+        taskInfoContainer.className = "task-info"
         taskContainer.id = this.id;
+        taskContainer.className = "task";
 
         let namePara = document.createElement("p");
         namePara.className = "task-name";
@@ -52,21 +55,32 @@ class Task {
         dueDatePara.className = "task-duedate";
         dueDatePara.textContent = this.formatDateForDisplay();
 
+        let buttonContainer = document.createElement("div")
+        buttonContainer.className = "task-buttons";
         let editButton = document.createElement("button");
         editButton.textContent = "Edit";
         editButton.className = "task-edit-button";
+        buttonContainer.append(editButton);
 
         let deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
         deleteButton.id = "task-delete-button";
+        buttonContainer.append(deleteButton);
 
-        taskContainer.append(namePara);
-        taskContainer.append(descPara);
-        taskContainer.append(projectPara);
-        taskContainer.append(priorityPara);
-        taskContainer.append(dueDatePara);
-        taskContainer.append(editButton);
-        taskContainer.append(deleteButton);
+        // taskContainer.append(namePara);
+        // taskContainer.append(descPara);
+        // taskContainer.append(projectPara);
+        // taskContainer.append(priorityPara);
+        // taskContainer.append(dueDatePara);
+        taskInfoContainer.append(namePara);
+        taskInfoContainer.append(descPara);
+        taskInfoContainer.append(projectPara);
+        taskInfoContainer.append(priorityPara);
+        taskInfoContainer.append(dueDatePara);
+        // taskContainer.append(editButton);
+        // taskContainer.append(deleteButton);
+        taskContainer.append(taskInfoContainer);
+        taskContainer.append(buttonContainer);
 
         return taskContainer;
     }
@@ -703,7 +717,7 @@ class displayManager {
 
         taskListContainer.addEventListener("click", (e) => {
             if (e.target && e.target.matches("#task-delete-button")) {
-                storageManagerInstance.deleteFromStorage(e.target.parentNode.id);
+                storageManagerInstance.deleteFromStorage(e.target.parentNode.parentNode.id);
             }
         })
     }
@@ -712,7 +726,7 @@ class displayManager {
         let taskListContainer = document.getElementById("tasks");
         taskListContainer.addEventListener("click", (e) => {
             if (e.target && e.target.matches(".task-edit-button")) {
-                let taskID = e.target.parentNode.id;
+                let taskID = e.target.parentNode.parentNode.id;
                 let task = storageManagerInstance.getItemFromStorage(taskID);
                 this.storeExtraTaskData(task.id, task.createDate);
                 storageManagerInstance.deleteFromStorage(taskID);
