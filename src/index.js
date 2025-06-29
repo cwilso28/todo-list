@@ -1,3 +1,4 @@
+import "./styles.css"
 import { format } from "date-fns";
 
 class Task {
@@ -32,18 +33,23 @@ class Task {
         taskContainer.id = this.id;
 
         let namePara = document.createElement("p");
+        namePara.className = "task-name";
         namePara.textContent = this.name;
 
         let descPara = document.createElement("p");
+        descPara.className = "task-desc";
         descPara.textContent = this.desc;
 
         let projectPara = document.createElement("p");
+        projectPara.className = "task-project";
         projectPara.textContent = this.project;
         
         let priorityPara = document.createElement("p");
+        priorityPara.className = "task-priority";
         priorityPara.textContent = this.priority;
 
         let dueDatePara = document.createElement("p");
+        dueDatePara.className = "task-duedate";
         dueDatePara.textContent = this.formatDateForDisplay();
 
         let editButton = document.createElement("button");
@@ -412,6 +418,7 @@ class displayManager {
         let p4 = document.createElement("option");
         p4.value = 4;
         p4.textContent = "4";
+        p4.selected = "selected";
         priorityFieldInput.append(p4);
         priorityFieldContainer.append(priorityFieldLabel);
         priorityFieldContainer.append(priorityFieldInput);
