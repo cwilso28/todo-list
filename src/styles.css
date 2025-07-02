@@ -1,7 +1,15 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
 body {
   background-color: rebeccapurple;
   display: grid;
   grid-template-columns: 20% 80%;
+  position: relative;
+  height: 100%;
+  width: 100%;
 }
 
 * {
@@ -30,7 +38,7 @@ header {
 .task-info {
   display: grid;
   grid-template-columns: 33.3% 33.3% 33.3%;
-  grid-template-rows: repeat(3, 30px);
+  grid-template-rows: repeat(3, 1fr);
   flex-grow: 1;
 }
 
@@ -54,4 +62,18 @@ header {
 
 .task-buttons {
   align-content: center;
+}
+
+#popup-container,
+#project-popup-container {
+  display: none;
+  position: absolute;
+}
+
+#greyBackgroundOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
