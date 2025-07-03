@@ -68,6 +68,7 @@ header {
 #project-popup-container {
   display: none;
   position: absolute;
+  background-color: white;
 }
 
 #greyBackgroundOverlay {
