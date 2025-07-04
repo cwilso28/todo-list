@@ -7,14 +7,17 @@ body {
   background-color: rebeccapurple;
   display: grid;
   grid-template-columns: 20% 80%;
+  grid-template-rows: min-content auto 1fr;
   position: relative;
   height: 100%;
   width: 100%;
+  
 }
 
 * {
   border: solid 1px black;
   margin: 0px;
+  font-family: sans-serif;
 }
 
 header {
@@ -26,7 +29,7 @@ header {
   grid-row: 2/3;
 }
 
-#tasks {
+#task-panel {
   grid-column: 2/3;
   grid-row: 2;
 }
@@ -77,4 +80,8 @@ header {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+#new-task-button{
+  height: 40px;
 }
