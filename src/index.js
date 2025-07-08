@@ -455,15 +455,18 @@ class displayManager {
         dueDateContainer.append(dueDateInput);
         formContainer.append(dueDateContainer);
 
+        let buttonContainer = document.createElement("div");
+        buttonContainer.id = "input-button-container";
         // Create submit button
         let submitButton = this.createSubmitButton();
 
-        formContainer.append(submitButton);
+        buttonContainer.append(submitButton);
 
         // Create cancel button
         let cancelButton = this.createCancelButton();
 
-        formContainer.append(cancelButton);
+        buttonContainer.append(cancelButton);
+        formContainer.append(buttonContainer);
         popup.style.display = "none";
 
         return popup;
