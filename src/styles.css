@@ -71,7 +71,22 @@ header {
 #project-popup-container {
   display: none;
   position: absolute;
+  left: 50%;
+  top: 80px;
+  transform: translate(-50%);
   background-color: white;
+}
+
+#input-form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#input-button-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
 #greyBackgroundOverlay {
