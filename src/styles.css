@@ -1,10 +1,11 @@
 html {
   height: 100%;
   width: 100%;
+  padding: 10px;
 }
 
 body {
-  background-color: rebeccapurple;
+  /* background-color: rebeccapurple; */
   display: grid;
   grid-template-columns: 20% 80%;
   grid-template-rows: min-content auto 1fr;
@@ -15,27 +16,36 @@ body {
 }
 
 * {
-  border: solid 1px black;
+  /* border: solid 1px black; */
   margin: 0px;
+  box-sizing: border-box;
   font-family: sans-serif;
 }
 
 header {
   grid-column: 1 / 3;
+  border-bottom: solid 3px gray;
+  padding-bottom: 5px;
 }
 
 #filters {
   grid-column: 1/2;
-  grid-row: 2/3;
+  grid-row: 2/-1;
+  border-right: solid 3px gray;
+  padding-top: 5px;
 }
 
 #task-panel {
   grid-column: 2/3;
   grid-row: 2;
+  margin-left: 5px;
+  padding-top: 5px;
 }
 
 .task{
   display: flex;
+  border-bottom: solid 1px gray;
+  margin-bottom: 15px;
 }
 
 .task-info {
@@ -61,6 +71,16 @@ header {
 .task-priority,
 .task-duedate {
   grid-row: 3/4;
+}
+
+.task-project,
+.task-priority {
+  border-right: solid 1px gray;
+}
+
+.task-priority,
+.task-duedate {
+  text-align: center;
 }
 
 .task-buttons {
