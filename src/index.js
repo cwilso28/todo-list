@@ -45,15 +45,15 @@ class Task {
 
         let projectPara = document.createElement("p");
         projectPara.className = "task-project";
-        projectPara.textContent = this.project;
+        projectPara.textContent = "Project: " + this.project;
         
         let priorityPara = document.createElement("p");
         priorityPara.className = "task-priority";
-        priorityPara.textContent = this.priority;
+        priorityPara.textContent = "Priority: " + this.priority;
 
         let dueDatePara = document.createElement("p");
         dueDatePara.className = "task-duedate";
-        dueDatePara.textContent = this.formatDateForDisplay();
+        dueDatePara.textContent = "Due: " + this.formatDateForDisplay();
 
         let buttonContainer = document.createElement("div")
         buttonContainer.className = "task-buttons";
