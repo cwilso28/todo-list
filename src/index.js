@@ -359,10 +359,11 @@ class displayManager {
         let nameFieldLabel = document.createElement("label");
         let nameFieldName = "task-name";
         nameFieldLabel.for = nameFieldName;
-        nameFieldLabel.textContent = "Task Name:";
+        // nameFieldLabel.textContent = "Task Name:";
         // input
-        let nameFieldInput = document.createElement("input");
-        nameFieldInput.type = "text";
+        let nameFieldInput = document.createElement("textarea");
+        nameFieldInput.placeholder = "Task Name";
+        nameFieldInput.rows = "4";
         nameFieldInput.id = nameFieldName;
         nameFieldInput.name = nameFieldName;
         nameFieldInput.required = true;
