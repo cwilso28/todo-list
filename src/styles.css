@@ -95,15 +95,18 @@ header {
   top: 80px;
   transform: translate(-50%);
   background-color: white;
+  padding: 10px;
 }
 
-#input-form-container {
+#input-form-container,
+#project-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
 }
 
-#input-button-container {
+#input-button-container,
+#project-form-button-container {
   display: flex;
   justify-content: center;
   gap: 20px;
