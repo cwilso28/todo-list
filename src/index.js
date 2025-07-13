@@ -364,6 +364,7 @@ class displayManager {
         let nameFieldInput = document.createElement("textarea");
         nameFieldInput.placeholder = "Task Name";
         nameFieldInput.rows = "4";
+        nameFieldInput.cols = "40";
         nameFieldInput.id = nameFieldName;
         nameFieldInput.name = nameFieldName;
         nameFieldInput.required = true;
@@ -377,12 +378,14 @@ class displayManager {
         let descFieldLabel = document.createElement("label");
         let descFieldName = "task-desc";
         descFieldLabel.for = descFieldName;
-        descFieldLabel.textContent = "Description:";
+        // descFieldLabel.textContent = "Description:";
         // input
         let descFieldInput = document.createElement("input");
         descFieldInput.type = "text";
         descFieldInput.id = descFieldName;
         descFieldInput.name = descFieldName;
+        descFieldInput.placeholder = "Description"
+        descFieldInput.size = "40";
         descFieldContainer.append(descFieldLabel);
         descFieldContainer.append(descFieldInput);
         formContainer.append(descFieldContainer);
@@ -511,7 +514,7 @@ class displayManager {
         let projectLabel = document.createElement("label");
         let projectName = "project-name";
         projectLabel.for = projectName;
-        projectLabel.textContent = "Project Name: ";
+        // projectLabel.textContent = "Project Name: ";
         inputFieldContainer.append(projectLabel);
 
         // Create input
@@ -519,17 +522,26 @@ class displayManager {
         projectInput.id = projectName;
         projectInput.name = projectName;
         projectInput.required = true;
+        projectInput.placeholder = "Project Name";
+        projectInput.size = "40";
         inputFieldContainer.append(projectInput);
 
+        let buttonContainer = document.createElement("div");
+        buttonContainer.id = "project-form-button-container";
         // Create submit button
         let submitButton = this.createSubmitButton();
 
-        projectForm.append(submitButton);
+        // projectForm.append(submitButton);
+        buttonContainer.append(submitButton);
 
         // Create cancel button
         let cancelButton = this.createCancelButton();
 
-        projectForm.append(cancelButton);
+        // projectForm.append(cancelButton);
+        buttonContainer.append(cancelButton);
+
+        projectForm.append(buttonContainer);
+
         projectPopupContainer.style.display = "none";
 
         return projectPopupContainer;
