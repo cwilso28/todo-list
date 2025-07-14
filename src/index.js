@@ -1,5 +1,7 @@
 import "./styles.css"
 import { format } from "date-fns";
+import deleteSymbol from "./delete.svg";
+import editSymbol from "./pencil.svg";
 
 class Task {
     constructor( {name, 
@@ -55,15 +57,26 @@ class Task {
         dueDatePara.className = "task-duedate";
         dueDatePara.textContent = "Due: " + this.formatDateForDisplay();
 
-        let buttonContainer = document.createElement("div")
+        let buttonContainer = document.createElement("div");
         buttonContainer.className = "task-buttons";
+
         let editButton = document.createElement("button");
-        editButton.textContent = "Edit";
+        // editButton.textContent = "Edit";
         editButton.className = "task-edit-button";
+        let editButtonImage = document.createElement("img");
+        editButtonImage.src = editSymbol;
+        editButtonImage.alt = "Edit button";
+        editButtonImage.className = "icon";
+        editButton.append(editButtonImage);
         buttonContainer.append(editButton);
 
         let deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
+        let deleteButtonImage = document.createElement("img");
+        deleteButtonImage.src = deleteSymbol;
+        deleteButtonImage.alt = "Delete button";
+        deleteButtonImage.className = "icon";
+        deleteButton.append(deleteButtonImage);
+        // deleteButton.textContent = "Delete";
         deleteButton.id = "task-delete-button";
         buttonContainer.append(deleteButton);
 
@@ -243,7 +256,13 @@ class filterManager {
         let projectDeleteButton = document.createElement("button");
         projectDeleteButton.type = "button";
         projectDeleteButton.className = "project-delete-button";
-        projectDeleteButton.textContent = "delete";
+        // projectDeleteButton.textContent = "delete";
+
+        let projectDeleteButtonImage = document.createElement("img");
+        projectDeleteButtonImage.src = deleteSymbol;
+        projectDeleteButtonImage.alt = "Delete button"
+        projectDeleteButtonImage.className = "icon";
+        projectDeleteButton.append(projectDeleteButtonImage);
         projectFilterContainer.append(projectDeleteButton);
 
         projectFilterSectionContainer.append(projectFilterContainer);
