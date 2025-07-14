@@ -123,3 +123,7 @@ header {
 #new-task-button{
   height: 40px;
 }
+
+.icon {
+  width: 20px;
+}
