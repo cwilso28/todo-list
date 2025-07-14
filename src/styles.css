@@ -127,3 +127,21 @@ header {
 .icon {
   width: 20px;
 }
+
+.project-delete-button,
+#task-delete-button {
+  margin-left: 5px;
+}
+
+.project-delete-button,
+#task-delete-button,
+.task-edit-button {
+  aspect-ratio: 1;
+  padding: 0px 2px;
+  background-color: white;
+  /* border: none; */
+}
+
+#project-filter {
+  margin-bottom: 5px;
+}
