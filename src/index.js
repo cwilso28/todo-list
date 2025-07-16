@@ -1,5 +1,5 @@
 import "./styles.css"
-import { format } from "date-fns";
+import { format, isAfter } from "date-fns";
 import deleteSymbol from "./delete.svg";
 import editSymbol from "./pencil.svg";
 
@@ -56,6 +56,9 @@ class Task {
         let dueDatePara = document.createElement("p");
         dueDatePara.className = "task-duedate";
         dueDatePara.textContent = "Due: " + this.formatDateForDisplay();
+        if (this.passedDueDate()) {
+            dueDatePara.style.color = "red";
+        }
 
         let buttonContainer = document.createElement("div");
         buttonContainer.className = "task-buttons";
@@ -104,6 +107,12 @@ class Task {
             dict[key] = value;
         };
         return dict;
+    }
+
+    passedDueDate () {
+        let today = newDateWithoutTime();
+        let result = isAfter(today, this.dueDate);
+        return result;
     }
 }
 
@@ -165,11 +174,19 @@ class taskListManager {
             
 
             let storedTasks = storageManagerInstance.getAllFromStorage();
+            let taskKeys = Object.keys(storedTasks);
+            taskKeys.sort();
 
-            for (let [key, value] of Object.entries(storedTasks)) {
-                let newTask = new Task(value)
+            for (let i = 0; i < taskKeys.length; i++) {
+                let key = taskKeys[i];
+                let task = storedTasks[key];
+                let newTask = new Task(task);
                 this.appendToTaskList(newTask);
             }
+            // for (let [key, value] of Object.entries(storedTasks)) {
+            //     let newTask = new Task(value)
+            //     this.appendToTaskList(newTask);
+            // }
         }
     }
 
