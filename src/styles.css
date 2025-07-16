@@ -56,15 +56,21 @@ header {
 }
 
 .task-name {
+  font-size: 1.1em;
   grid-column: 1/4;
   grid-row:1/2;
 }
-
 
 .task-desc {
   font-size: .8em;
   grid-row: 2/3;
   grid-column: 1/4;
+}
+
+.task-project,
+.task-priority,
+.task-duedate {
+  font-size: .8em;
 }
 
 .task-project,
@@ -130,6 +136,7 @@ header {
 
 .task-edit-button {
   background-image: url("./pencil.svg");
+  background-repeat: no-repeat;
 }
 
 .task-edit-button:hover,
@@ -148,6 +155,7 @@ header {
 #task-delete-button {
   margin-left: 5px;
   background-image: url("./delete.svg");
+  background-repeat: no-repeat;
 }
 
 .project-delete-button,
@@ -159,7 +167,7 @@ header {
   /* padding: 0px 2px; */
   background-color: white;
   border: none;
-  background-size: 20px;
+  background-size: 25px;
   background-position: center;
 }
 
